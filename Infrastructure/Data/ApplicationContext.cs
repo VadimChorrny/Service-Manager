@@ -36,7 +36,9 @@ namespace Infrastructure.Data
             modelBuilder.Entity<BillingCycle>().HasData(
                 new BillingCycle { Id = 1, Name = "Monthly" },
                 new BillingCycle { Id = 2, Name = "Yearly" },
-                new BillingCycle { Id = 3, Name = "Half-Yearly"}
+                new BillingCycle { Id = 3, Name = "Half-Yearly"},
+                new BillingCycle { Id = 4, Name = "Weekly"},
+                new BillingCycle { Id = 5, Name = "Quartaly" }
                 );
 
             modelBuilder.Entity<Bank>().HasIndex(b => b.Name).IsUnique();

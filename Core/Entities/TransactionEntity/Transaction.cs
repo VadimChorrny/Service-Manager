@@ -1,12 +1,13 @@
 ﻿using Core.Entities.CurrencyEntity;
 using System.ComponentModel.DataAnnotations;
 using Core.Entities.CardEntity;
+using Core.Entities.SubscriptionEntity;
 
 namespace Core.Entities.TransactionEntity
 {
     public class Transaction
     {
-        [Key] 
+        [Key]
         public Guid Id { get; set; }
         public string TransactionFromBankId { get; set; }
         //public int TransactionId { get; set; }
@@ -22,5 +23,6 @@ namespace Core.Entities.TransactionEntity
         //public Guid? CardId { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual Card Card { get; set; }
+        public virtual Subscription Subscription { get; set; }
     }
 }

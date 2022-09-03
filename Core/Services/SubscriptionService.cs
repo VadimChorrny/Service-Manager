@@ -124,6 +124,7 @@ namespace Core.Services
             var user = await _unitOfWork.UserRepository.GetById(userId);
             if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
             var transactions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).OrderByDescending(el => el.CreatedDate).ToArray();//.Concat()//user.Banks.Join//user.Banks.Select(b => b.Cards.Select(c => c.Transactions));
+            //var subscriptions = 
             //foreach (var trans in transactions)
             //{
                 
@@ -134,69 +135,88 @@ namespace Core.Services
             {
                 for (int j = transactions.Count() - 1; j > 0; j--)
                 {
+                    
                     if (i != j)
                     {
                         var iElement = transactions[i];
                         var jElement = transactions[j];
-                        //bool isBillingCycle = false;
-                        string billingCycle = null;
-                        //if (iElement.Description.Contains("Sosiska") && jElement.Description.Contains("Sosiska"))
-                        //{
-
-                        //}
-                        if (IsMonthDifference(iElement.CreatedDate, jElement.CreatedDate, 5))
+                        if (iElement.Subscription == null || jElement.Subscription == null)
                         {
-                            billingCycle = "Monthly";
-                            //foreach (var service in services)
+                            //bool isBillingCycle = false;
+                            string billingCycle = null;
+                            //if (iElement.Description.Contains("Sosiska") && jElement.Description.Contains("Sosiska"))
                             //{
-                            //    if (service != null && transactions.ElementAt(i).Description.Contains(service.Name) &&
-                            //        transactions.ElementAt(j).Description.Contains(service.Name))
-                            //    {
-                            //        result.Add(new SubscriptionResponseDTO {ServiceName = service.Name});
-                            //    }
-                            //    ;
-                            //}
-                            //iElement.Sum
-                            
-                        }
-                        else if (IsYearDifference(iElement.CreatedDate, jElement.CreatedDate, 5))
-                        {
-                            billingCycle = "Yearly";
-                            //++i;
-                            //j = 0;
-                        }
 
-                        if (billingCycle != null)
-                        {
-                            if ((iElement.Description.Contains(jElement.Description) || jElement.Description.Contains(iElement.Description)) && IsPriceDifference(15, iElement.Sum, jElement.Sum))
+                            //}
+                            if (IsMonthDifference(iElement.CreatedDate, jElement.CreatedDate, 5))
                             {
-                                Service service = services.FirstOrDefault(el =>
-                                    iElement.Description.Contains(el.Name) || jElement.Description.Contains(el.Name));
-                                Subscription subscription = new Subscription();
-                                if (service == null)
-                                {
-                                    subscription.IsCustom = true;
-                                    subscription.Name = iElement.Description;
-                                }
-                                else
-                                {
-                                    subscription.IsCustom = false;
-                                    subscription.Service = service;
-                                }
-                                subscription.User = user;
-                                subscription.BillingCycle = (await _unitOfWork.BillingCycleRepository.Get( bc => bc.Name == billingCycle )).First();
-                                subscription.Transactions.Add(iElement);
-                                subscription.Transactions.Add(jElement);
-                                result.Add(new SubscriptionResponseDTO { ServiceName = transactions.ElementAt(i).Description, Date = iElement.CreatedDate, Date2 = jElement.CreatedDate, BillingCycle = billingCycle, IsCustom = true });
-                                await _unitOfWork.SubscriptionRepository.Insert(subscription);
-                                await _unitOfWork.SaveChangesAsync();
-                                ++i;
-                                j = 0;
+                                billingCycle = "Monthly";
+                                //foreach (var service in services)
+                                //{
+                                //    if (service != null && transactions.ElementAt(i).Description.Contains(service.Name) &&
+                                //        transactions.ElementAt(j).Description.Contains(service.Name))
+                                //    {
+                                //        result.Add(new SubscriptionResponseDTO {ServiceName = service.Name});
+                                //    }
+                                //    ;
+                                //}
+                                //iElement.Sum
+
                             }
-                            //if (services != null && transactions.ElementAt(i).Description.Contains(service.Name) &&
-                            //        transactions.ElementAt(j).Description.Contains(service.Name))
-                                
+                            else if (IsYearDifference(iElement.CreatedDate, jElement.CreatedDate, 5))
+                            {
+                                billingCycle = "Yearly";
+                                //++i;
+                                //j = 0;
+                            }
+                            else if (IsWeekDifference(iElement.CreatedDate, jElement.CreatedDate, 2))
+                            {
+                                billingCycle = "Weekly";
+                            }
+                            else if (IsQuartalDifference(iElement.CreatedDate, jElement.CreatedDate, 10))
+                            {
+                                billingCycle = "Quartaly";
+                            }
+                            else if (IsHalfYearDifference(iElement.CreatedDate, jElement.CreatedDate, 10))
+                            {
+                                billingCycle = "Half-Yearly";
+                            }
+                            if (billingCycle != null)
+                            {
+                                //if (user.)
+                                //{
+
+                                //}
+                                if ((iElement.Description.Contains(jElement.Description) || jElement.Description.Contains(iElement.Description)) && IsPriceDifference(15, iElement.Sum, jElement.Sum))
+                                {
+                                    Service service = services.FirstOrDefault(el =>
+                                        iElement.Description.Contains(el.Name) || jElement.Description.Contains(el.Name));
+                                    Subscription subscription = new Subscription();
+                                    if (service == null)
+                                    {
+                                        subscription.IsCustom = true;
+                                        subscription.Name = iElement.Description;
+                                    }
+                                    else
+                                    {
+                                        subscription.IsCustom = false;
+                                        subscription.Service = service;
+                                    }
+                                    subscription.User = user;
+                                    subscription.Transactions.Add(iElement);
+                                    subscription.Transactions.Add(jElement);
+                                    result.Add(new SubscriptionResponseDTO { ServiceName = transactions.ElementAt(i).Description, Date = iElement.CreatedDate, Date2 = jElement.CreatedDate, BillingCycle = billingCycle, IsCustom = true });
+                                    await _unitOfWork.SubscriptionRepository.Insert(subscription);
+                                    await _unitOfWork.SaveChangesAsync();
+                                    ++i;
+                                    j = 0;
+                                }
+                                //if (services != null && transactions.ElementAt(i).Description.Contains(service.Name) &&
+                                //        transactions.ElementAt(j).Description.Contains(service.Name))
+
+                            }
                         }
+                        
 
                     }
                     
@@ -210,7 +230,6 @@ namespace Core.Services
         {
             return Enumerable.Range(0, maxDayDifference + 1).Contains(Math.Abs((to.Date - from.Date).Days - 365));
         }
-
         private bool IsPriceDifference(int percent, float price, float price2)
         {
             //float pricePercent = (price / 100 * percent);

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Visual Studio\\SDK\\NuGetPackages"
+=======
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\API.csproj": {}
+  },
+  "projects": {
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\API.csproj",
+        "projectName": "API",
+        "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
         ],
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -32,11 +49,19 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+<<<<<<< HEAD
               "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj"
               },
               "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj"
+=======
+              "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj": {
+                "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj"
+              },
+              "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
               }
             }
           }
@@ -108,6 +133,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
         }
       }
@@ -123,6 +149,23 @@
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Visual Studio\\SDK\\NuGetPackages"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj",
+        "projectName": "Core",
+        "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
         ],
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -214,6 +257,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
         }
       }
@@ -229,6 +273,23 @@
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Visual Studio\\SDK\\NuGetPackages"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj",
+        "projectName": "Infrastructure",
+        "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
         ],
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -246,8 +307,13 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
+<<<<<<< HEAD
               "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj": {
                 "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj"
+=======
+              "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj": {
+                "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
               }
             }
           }
@@ -310,7 +376,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+>>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
         }
       }
     }
