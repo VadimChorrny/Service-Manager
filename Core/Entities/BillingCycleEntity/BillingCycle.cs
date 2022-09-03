@@ -1,9 +1,15 @@
-﻿namespace Core.Entities.BillingCycleEntity
+﻿using System.ComponentModel.DataAnnotations;
+using Core.Entities.LanguageEntity;
+
+namespace Core.Entities.BillingCycleEntity
 {
     public class BillingCycle
     {
-        public int BilLingCycleId { get; set; }
-        public string? Name { get; set; }
-        public int? LangId { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public Guid? LangId { get; set; }
+        public virtual Language Language { get; set; }
     }
 }

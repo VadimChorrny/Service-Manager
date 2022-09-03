@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\Subscription Manager\\API\\API.csproj": {}
+    "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\C#\\Subscription Manager\\API\\API.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\Subscription Manager\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\C#\\Subscription Manager\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\vadim_oyanwuw\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\Subscription Manager\\API\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\source\\repos\\Manager\\API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Visual Studio\\SDK\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\vadim_oyanwuw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +32,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\C#\\Subscription Manager\\Core\\Core.csproj": {
-                "projectPath": "D:\\C#\\Subscription Manager\\Core\\Core.csproj"
+              "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj"
               },
-              "D:\\C#\\Subscription Manager\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\C#\\Subscription Manager\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -104,21 +108,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C#\\Subscription Manager\\Core\\Core.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\Subscription Manager\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\C#\\Subscription Manager\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\vadim_oyanwuw\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\Subscription Manager\\Core\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Visual Studio\\SDK\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\vadim_oyanwuw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -147,6 +155,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[11.0.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.0.6, )"
             },
             "FluentValidation": {
               "target": "Package",
@@ -202,21 +214,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C#\\Subscription Manager\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\Subscription Manager\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\C#\\Subscription Manager\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\vadim_oyanwuw\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\Subscription Manager\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Visual Studio\\SDK\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\vadim_oyanwuw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -230,8 +246,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\C#\\Subscription Manager\\Core\\Core.csproj": {
-                "projectPath": "D:\\C#\\Subscription Manager\\Core\\Core.csproj"
+              "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj"
               }
             }
           }
@@ -264,6 +280,10 @@
               "target": "Package",
               "version": "[6.0.7, )"
             },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.7, )"
@@ -290,7 +310,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
         }
       }
     }

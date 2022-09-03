@@ -1,10 +1,13 @@
-﻿namespace Core.Entities.OtherEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.OtherEntities
 {
     public class Membership
     {
-        public int MembershipId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string? Name { get; set; }
-        public int? LangId { get; set; }
+        public Guid? LangId { get; set; }
         public int? Sum { get; set; }
     }
 }

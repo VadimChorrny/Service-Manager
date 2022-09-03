@@ -1,9 +1,12 @@
-﻿namespace Core.Entities.CurrencyEntity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.CurrencyEntity
 {
     public class CurrencyTranslate
     {
-        public int CurrencyTranslateId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string? CurrencyTranslateName { get; set; }
-        public int? LangId { get; set; }
+        public Guid? LangId { get; set; }
     }
 }

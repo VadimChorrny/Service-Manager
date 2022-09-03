@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 
@@ -92,7 +93,7 @@ namespace Core.Services
         public async Task<AuthenticationDTO> GenerateTokens(User user)
         {
             var claims = _jwtService.SetClaims(user);
-            var accessToken = _jwtService.CreateToken(claims);
+            //var accessToken = _jwtService.CreateToken(claims);
             var refreshToken = await CreateRefreshToken(user.Id);
 
             var token = _jwtService.CreateToken(claims);
@@ -175,6 +176,11 @@ namespace Core.Services
                 RefreshToken = newRefreshToken
             };
             return tokens;
+        }
+
+        public ClaimsPrincipal ValidateToken(string jwtToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
