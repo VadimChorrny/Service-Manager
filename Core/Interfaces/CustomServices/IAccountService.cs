@@ -1,4 +1,5 @@
-﻿using Core.DTOs.Google;
+﻿using System.Security.Claims;
+using Core.DTOs.Google;
 using Core.DTOs.UserDTO;
 using Core.Entities.UserEntity;
 
@@ -13,6 +14,7 @@ namespace Core.Interfaces.CustomInterfaces
         Task SentResetPasswordTokenAsync(string userEmail);
         Task<User> AuthenticateGoogleUserAsync(GoogleUserRequest request);
         Task<AuthenticationDTO> RefreshTokenAsync(AuthenticationDTO authorizationDTO);
+        ClaimsPrincipal ValidateToken(string jwtToken);
         //Task ResetPasswordAsync(AuthorChangePasswordDTO userChangePasswordDTO);
     }
 }

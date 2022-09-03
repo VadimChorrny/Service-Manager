@@ -15,6 +15,9 @@ namespace Core
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAccountService, AccountService>(); // remove before migrations
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<ITransactionService, TransactionService>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

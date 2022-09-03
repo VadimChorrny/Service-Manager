@@ -15,3 +15,37 @@ D:\C#\Subscription Manager\Infrastructure\obj\Debug\net6.0\refint\Infrastructure
 D:\C#\Subscription Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 D:\C#\Subscription Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
 D:\C#\Subscription Manager\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\ref\Infrastructure.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Core.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\bin\Debug\net6.0\Core.pdb
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfo.cs
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
+C:\Users\Admin\Source\Repos\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Core.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\bin\Debug\net6.0\Core.pdb
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.AssemblyReference.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfoInputs.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfo.cs
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CoreCompileInputs.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll

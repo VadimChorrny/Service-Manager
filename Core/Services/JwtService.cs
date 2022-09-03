@@ -17,9 +17,10 @@ namespace Core.Services
         private readonly IOptions<JwtOptions> jwtOptions;
         private readonly UserManager<User> userManager;
 
-        public JwtService(IOptions<JwtOptions> jwtOptions)
+        public JwtService(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager)
         {
             this.jwtOptions = jwtOptions;
+            this.userManager = userManager;
         }
 
         //public string CreateRefreshToken()
@@ -71,9 +72,14 @@ namespace Core.Services
             var claims = new List<Claim>
             {
                 new Claim("Id", user.Id),
-                new Claim("Email", user.UserName)
+                new Claim("Email", user.UserName),
             };
-
+            //user.Roles
+            //var roles = userManager.GetRolesAsync(user).Result;
+            //foreach (var role in roles)
+            //{
+            //    claims.Add(new Claim(ClaimTypes.Role, role));
+            //}
             return claims;
         }
         public string CreateRefreshToken()

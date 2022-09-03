@@ -5,7 +5,8 @@ namespace Core.Entities.CountryEntity
     public class Country
     {
         [Key]
-        public int CountryId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public string? Flag { get; set; }
     }
 }

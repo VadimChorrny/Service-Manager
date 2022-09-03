@@ -1,10 +1,13 @@
-﻿namespace Core.Entities.OtherEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.OtherEntities
 {
     public class Synchronization
     {
-        public int SynchronizationId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string? Name { get; set; }
-        public int? CategoryId { get; set; }
-        public int? LangId { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Guid? LangId { get; set; }
     }
 }

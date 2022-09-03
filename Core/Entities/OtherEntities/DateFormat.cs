@@ -1,8 +1,11 @@
-﻿namespace Core.Entities.OtherEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.OtherEntities
 {
     public class DateFormat
     {
-        public int DateFormatId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string DateFormatName { get; set; }
     }
 }

@@ -24,14 +24,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.BankEntity.Bank", b =>
                 {
-                    b.Property<int>("BankId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankId"), 1L, 1);
-
-                    b.Property<int?>("CounterUser")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("CountryId")
                         .HasColumnType("int");
@@ -52,134 +49,463 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("BankId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Banks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            Links = "www.monobank.ua",
+                            LinksAPI = "https://api.monobank.ua/docs/",
+                            Name = "Monobank"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            Links = "https://privatbank.ua/",
+                            LinksAPI = "https://api.privatbank.ua/",
+                            Name = "PrivatBank"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryId = 1,
+                            Links = "https://ukrsibbank.com",
+                            LinksAPI = "",
+                            Name = "UKRSIBBANK"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryId = 2,
+                            Links = "www.chase.com",
+                            LinksAPI = "https://www.chase.com/digital/data-sharing",
+                            Name = "Chase"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryId = 2,
+                            Links = "http://www.wellsfargo.com",
+                            LinksAPI = "https://developer.wellsfargo.com/",
+                            Name = "Wells Fargo Bank"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.BillingCycleEntity.BillingCycle", b =>
                 {
-                    b.Property<int>("BilLingCycleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BilLingCycleId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LanguageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BilLingCycleId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
 
                     b.ToTable("BillingCycles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Monthly"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Yearly"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Half-Yearly"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.CardEntity.Card", b =>
                 {
-                    b.Property<int>("CardId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CardId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserBankId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserBankId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CardId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserBankId");
 
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("Core.Entities.CategoryEntity.Category", b =>
+            modelBuilder.Entity("Core.Entities.CategoryEntity.ServiceCategory", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Core.Entities.CountryEntity.Country", b =>
                 {
-                    b.Property<int>("CountryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Flag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CountryId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Ukraine"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "USA"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Poland"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.CountryEntity.CountryTranslate", b =>
                 {
-                    b.Property<int>("CountryTranslateId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryTranslateId"), 1L, 1);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CountryTranslateId");
+                    b.HasKey("Id");
 
                     b.ToTable("CountryTranslates");
                 });
 
             modelBuilder.Entity("Core.Entities.CurrencyEntity.Currency", b =>
                 {
-                    b.Property<int>("CurrencyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrencyId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CountUser")
-                        .HasColumnType("int");
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Flag")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CurrencyId");
+                    b.Property<string>("LettersSign")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyCode")
+                        .IsUnique();
 
                     b.ToTable("Currencies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CurrencyCode = "980",
+                            LettersSign = "₴",
+                            Name = "Ukrainian Hryvnia",
+                            ShortName = "UAH"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CurrencyCode = "978",
+                            LettersSign = "€",
+                            Name = "Euro",
+                            ShortName = "UAH"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CurrencyCode = "840",
+                            LettersSign = "$",
+                            Name = "US Dollar",
+                            ShortName = "USD"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CurrencyCode = "826",
+                            LettersSign = "£",
+                            Name = "British pound",
+                            ShortName = "GBP"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CurrencyCode = "124",
+                            LettersSign = "$",
+                            Name = "Canadian Dollar",
+                            ShortName = "CAD"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CurrencyCode = "036",
+                            LettersSign = "$",
+                            Name = "Australian Dollar",
+                            ShortName = "AUD"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CurrencyCode = "756",
+                            LettersSign = "CHF",
+                            Name = "Swiss Franc",
+                            ShortName = "CHF"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CurrencyCode = "484",
+                            LettersSign = "$",
+                            Name = "Mexican Peso",
+                            ShortName = "MXN"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CurrencyCode = "356",
+                            LettersSign = "₹",
+                            Name = "Indian Ruble",
+                            ShortName = "INR"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CurrencyCode = "956",
+                            LettersSign = "R$",
+                            Name = "Brazilian Real",
+                            ShortName = "BRL"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CurrencyCode = "208",
+                            LettersSign = "kr.",
+                            Name = "Danish Krone",
+                            ShortName = "DKK"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CurrencyCode = "752",
+                            LettersSign = "kr",
+                            Name = "Swedish Krona",
+                            ShortName = "SEK"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CurrencyCode = "578",
+                            LettersSign = "kr",
+                            Name = "Norwegian Krone",
+                            ShortName = "NOK"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CurrencyCode = "191",
+                            LettersSign = "kn",
+                            Name = "Croatian Kuna",
+                            ShortName = "HRK"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CurrencyCode = "554",
+                            LettersSign = "$",
+                            Name = "New Zealand Dollar",
+                            ShortName = "NZD"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CurrencyCode = "203",
+                            LettersSign = "Kč",
+                            Name = "Czech Koruna",
+                            ShortName = "CZK"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CurrencyCode = "392",
+                            LettersSign = "¥",
+                            Name = "Japanese Yen",
+                            ShortName = "JPY"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CurrencyCode = "985",
+                            LettersSign = "zł",
+                            Name = "Polish Zloty",
+                            ShortName = "PLN"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CurrencyCode = "946",
+                            LettersSign = "L",
+                            Name = "Romanian Leu",
+                            ShortName = "RON"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CurrencyCode = "764",
+                            LettersSign = "฿",
+                            Name = "Thai Baht",
+                            ShortName = "THB"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CurrencyCode = "784",
+                            LettersSign = "د.إ",
+                            Name = "United Arab Emirates Dirham",
+                            ShortName = "AED"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CurrencyCode = "344",
+                            LettersSign = "$",
+                            Name = "Hong Kong Dollar",
+                            ShortName = "HKD"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CurrencyCode = "348",
+                            LettersSign = "Ft",
+                            Name = "Hungarian Forint",
+                            ShortName = "HUF"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CurrencyCode = "376",
+                            LettersSign = "₪",
+                            Name = "Israeli New Sheqel",
+                            ShortName = "ILS"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CurrencyCode = "702",
+                            LettersSign = "$",
+                            Name = "Singapore Dollar",
+                            ShortName = "SGD"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CurrencyCode = "949",
+                            LettersSign = "₺",
+                            Name = "Turkish Lira",
+                            ShortName = "TRY"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CurrencyCode = "710",
+                            LettersSign = "R",
+                            Name = "South African Rand",
+                            ShortName = "ZAR"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CurrencyCode = "975",
+                            LettersSign = "lv.",
+                            Name = "Bulgarian Lev",
+                            ShortName = "BGN"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.LanguageEntity.Language", b =>
                 {
-                    b.Property<int>("LanguageId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LanguageId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -187,56 +513,50 @@ namespace Infrastructure.Migrations
                     b.Property<string>("SmallName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LanguageId");
+                    b.HasKey("Id");
 
                     b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.DateFormat", b =>
                 {
-                    b.Property<int>("DateFormatId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DateFormatId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DateFormatName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DateFormatId");
+                    b.HasKey("Id");
 
                     b.ToTable("DateFormats");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.Labels", b =>
                 {
-                    b.Property<int>("LabelId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LabelId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("LabelId");
+                    b.HasKey("Id");
 
                     b.ToTable("Labels");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.Membership", b =>
                 {
-                    b.Property<int>("MembershipId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MembershipId"), 1L, 1);
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -244,67 +564,61 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("Sum")
                         .HasColumnType("int");
 
-                    b.HasKey("MembershipId");
+                    b.HasKey("Id");
 
                     b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.RemindMe", b =>
                 {
-                    b.Property<int>("RemindMeId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RemindMeId"), 1L, 1);
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RemindMeId");
+                    b.HasKey("Id");
 
                     b.ToTable("RemindMes");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.Status", b =>
                 {
-                    b.Property<int>("StatusId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"), 1L, 1);
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusId");
+                    b.HasKey("Id");
 
                     b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.Synchronization", b =>
                 {
-                    b.Property<int>("SynchronizationId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SynchronizationId"), 1L, 1);
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("SynchronizationId");
+                    b.HasKey("Id");
 
                     b.ToTable("Synchronizations");
                 });
@@ -330,75 +644,11 @@ namespace Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subcategory", b =>
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Service", b =>
                 {
-                    b.Property<int>("SubcategoryId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubcategoryId"), 1L, 1);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LangId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SubcategoryId");
-
-                    b.ToTable("Subcategories");
-                });
-
-            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>
-                {
-                    b.Property<int>("SubscriptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubscriptionId"), 1L, 1);
-
-                    b.Property<int?>("BillingCycleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LabelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RemindMeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SubscriptionsListId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SubscriptionId");
-
-                    b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SubscriptionList", b =>
-                {
-                    b.Property<int>("SubscriptionListId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubscriptionListId"), 1L, 1);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CountUser")
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -409,77 +659,145 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubcategoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ServiceCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceSubCategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("SubscriptionListId");
+                    b.HasIndex("ServiceCategoryId");
 
-                    b.ToTable("SubscriptionLists");
+                    b.HasIndex("ServiceSubCategoryId");
+
+                    b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SubscriptionsSearch", b =>
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.ServiceSubCategory", b =>
                 {
-                    b.Property<int>("SubscriptionSearchId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubscriptionSearchId"), 1L, 1);
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubscriptionsListId")
+                    b.HasKey("Id");
+
+                    b.ToTable("Subcategories");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BillingCycleId")
                         .HasColumnType("int");
 
-                    b.HasKey("SubscriptionSearchId");
+                    b.Property<bool>("IsCustom")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("LabelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("RemindMeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillingCycleId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SubscriptionsSearch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("SubscriptionsSearches");
                 });
 
             modelBuilder.Entity("Core.Entities.TransactionEntity.Transaction", b =>
                 {
-                    b.Property<int>("TransactionId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"), 1L, 1);
-
-                    b.Property<string>("Card")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CardId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CardId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategoryTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrencyId")
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Payee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("SubscriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("Sum")
+                    b.Property<float>("Sum")
                         .HasColumnType("real");
 
-                    b.HasKey("TransactionId");
+                    b.Property<string>("TransactionFromBankId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
 
                     b.HasIndex("CurrencyId");
+
+                    b.HasIndex("SubscriptionId");
 
                     b.ToTable("Transactions");
                 });
@@ -492,23 +810,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BankId")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ConnectedBanks")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreateSubscriptions")
                         .HasColumnType("int");
 
                     b.Property<int?>("CurrencyId")
@@ -524,11 +833,8 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("LangId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LanguagesLanguageId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("LangId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("LastActivityDay")
                         .HasColumnType("datetime2");
@@ -559,9 +865,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PayExperience")
                         .HasColumnType("int");
 
-                    b.Property<int>("Payments")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -580,8 +883,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StatusId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("StatusId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
@@ -595,13 +898,11 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankId");
-
                     b.HasIndex("CountryId");
 
                     b.HasIndex("CurrencyId");
 
-                    b.HasIndex("LanguagesLanguageId");
+                    b.HasIndex("LangId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -614,26 +915,57 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8e168c0e-07f5-4220-8436-d5f365a745dc",
+                            Email = "Admin@Admin.com",
+                            EmailConfirmed = true,
+                            Gender = 0,
+                            LastActivityDay = new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7041),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "MASTERADMIN",
+                            Notification = true,
+                            PasswordHash = "AQAAAAEAACcQAAAAEDksO3F+3MgLdN7iHxMWEbx2x9ugsCWBsOToR2Ga6VU9hDQZTwZVb6GtIa+4M2DmsA==",
+                            PayExperience = 0,
+                            PhoneNumber = "XXXXXXXXXXXXX",
+                            PhoneNumberConfirmed = true,
+                            PremiumMembership = 0,
+                            RegistrationDay = new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7006),
+                            RoundNumbersToIntegers = false,
+                            SecurityStamp = "00000000-0000-0000-0000-000000000000",
+                            TwoFactorEnabled = false,
+                            UserName = "masteradmin"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.UserEntity.UserBank", b =>
                 {
-                    b.Property<int>("UserBankId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserBankId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("BankId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SynchronizationId")
-                        .HasColumnType("int");
+                    b.Property<string>("BankToken")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SynchronizationId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserBankId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserBanks");
                 });
@@ -663,6 +995,22 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2301D884-221A-4E7D-B509-0113DCC043E1",
+                            ConcurrencyStamp = "b73cbd4c-50ab-4c2d-9e87-ae5c206fe2ce",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3",
+                            ConcurrencyStamp = "eb613533-4fba-447b-a072-a5dea9956a79",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -771,6 +1119,33 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Entities.BankEntity.Bank", b =>
+                {
+                    b.HasOne("Core.Entities.CountryEntity.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Core.Entities.BillingCycleEntity.BillingCycle", b =>
+                {
+                    b.HasOne("Core.Entities.LanguageEntity.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
+                    b.Navigation("Language");
+                });
+
+            modelBuilder.Entity("Core.Entities.CardEntity.Card", b =>
+                {
+                    b.HasOne("Core.Entities.UserEntity.UserBank", "UserBank")
+                        .WithMany("Cards")
+                        .HasForeignKey("UserBankId");
+
+                    b.Navigation("UserBank");
+                });
+
             modelBuilder.Entity("Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Core.Entities.UserEntity.User", "User")
@@ -780,46 +1155,118 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Service", b =>
+                {
+                    b.HasOne("Core.Entities.CategoryEntity.ServiceCategory", "ServiceCategory")
+                        .WithMany()
+                        .HasForeignKey("ServiceCategoryId");
+
+                    b.HasOne("Core.Entities.SubscriptionEntity.ServiceSubCategory", "ServiceSubCategory")
+                        .WithMany()
+                        .HasForeignKey("ServiceSubCategoryId");
+
+                    b.Navigation("ServiceCategory");
+
+                    b.Navigation("ServiceSubCategory");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>
+                {
+                    b.HasOne("Core.Entities.BillingCycleEntity.BillingCycle", "BillingCycle")
+                        .WithMany()
+                        .HasForeignKey("BillingCycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.SubscriptionEntity.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId");
+
+                    b.HasOne("Core.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("BillingCycle");
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SubscriptionsSearch", b =>
+                {
+                    b.HasOne("Core.Entities.SubscriptionEntity.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Core.Entities.TransactionEntity.Transaction", b =>
                 {
+                    b.HasOne("Core.Entities.CardEntity.Card", "Card")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Entities.CurrencyEntity.Currency", "Currency")
                         .WithMany()
-                        .HasForeignKey("CurrencyId");
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.SubscriptionEntity.Subscription", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("SubscriptionId");
+
+                    b.Navigation("Card");
 
                     b.Navigation("Currency");
                 });
 
             modelBuilder.Entity("Core.Entities.UserEntity.User", b =>
                 {
-                    b.HasOne("Core.Entities.BankEntity.Bank", "Banks")
-                        .WithMany()
-                        .HasForeignKey("BankId");
-
-                    b.HasOne("Core.Entities.CountryEntity.Country", "Countries")
+                    b.HasOne("Core.Entities.CountryEntity.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Core.Entities.CurrencyEntity.Currency", "Currencies")
+                    b.HasOne("Core.Entities.CurrencyEntity.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId");
 
-                    b.HasOne("Core.Entities.LanguageEntity.Language", "Languages")
+                    b.HasOne("Core.Entities.LanguageEntity.Language", "Language")
                         .WithMany()
-                        .HasForeignKey("LanguagesLanguageId");
+                        .HasForeignKey("LangId");
 
                     b.HasOne("Core.Entities.OtherEntities.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId");
 
-                    b.Navigation("Banks");
+                    b.Navigation("Country");
 
-                    b.Navigation("Countries");
+                    b.Navigation("Currency");
 
-                    b.Navigation("Currencies");
-
-                    b.Navigation("Languages");
+                    b.Navigation("Language");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Core.Entities.UserEntity.UserBank", b =>
+                {
+                    b.HasOne("Core.Entities.BankEntity.Bank", "Bank")
+                        .WithMany("UserBanks")
+                        .HasForeignKey("BankId");
+
+                    b.HasOne("Core.Entities.UserEntity.User", "User")
+                        .WithMany("Banks")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Bank");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -871,6 +1318,31 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.BankEntity.Bank", b =>
+                {
+                    b.Navigation("UserBanks");
+                });
+
+            modelBuilder.Entity("Core.Entities.CardEntity.Card", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Core.Entities.UserEntity.User", b =>
+                {
+                    b.Navigation("Banks");
+                });
+
+            modelBuilder.Entity("Core.Entities.UserEntity.UserBank", b =>
+                {
+                    b.Navigation("Cards");
                 });
 #pragma warning restore 612, 618
         }

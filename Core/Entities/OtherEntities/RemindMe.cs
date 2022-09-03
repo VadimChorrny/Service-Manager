@@ -1,9 +1,12 @@
-﻿namespace Core.Entities.OtherEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.OtherEntities
 {
     public class RemindMe
     {
-        public int RemindMeId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string? Name { get; set; }
-        public int? LangId { get; set; }
+        public Guid? LangId { get; set; }
     }
 }

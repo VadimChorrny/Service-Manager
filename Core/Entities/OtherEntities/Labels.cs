@@ -5,8 +5,9 @@ namespace Core.Entities.OtherEntities
     public class Labels
     {
         [Key]
-        public int LabelId { get; set; }
+        public Guid Id { get; set; }
+        //public int LabelId { get; set; }
         public string? Name { get; set; }
-        public int? UserId { get; set; }
+        public Guid? UserId { get; set; }
     }
 }

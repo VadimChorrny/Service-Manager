@@ -1,10 +1,13 @@
-﻿namespace Core.Entities.CountryEntity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core.Entities.CountryEntity
 {
     public class CountryTranslate
     {
-        public int CountryTranslateId { get; set; }
-        public int CountryId { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public Guid CountryId { get; set; }
         public string? CountryName { get; set; }
-        public int? LangId { get; set; }
+        public Guid? LangId { get; set; }
     }
 }
