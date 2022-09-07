@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Core.DTOs.Transactions;
 using Core.DTOs.UserDTO;
+using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
 using Core.Interfaces.CustomInterfaces;
 using Core.Interfaces.CustomServices;
@@ -26,6 +28,7 @@ namespace Core
             {
                 mc.CreateMap<User, UserDTO>().ReverseMap();
                 mc.CreateMap<RegisterUserDTO, User>().ReverseMap();
+                mc.CreateMap<TransactionDTO, Transaction>().ReverseMap(); //ForMember(dest => dest.);
             });
 
             IMapper mapper = configures.CreateMapper();

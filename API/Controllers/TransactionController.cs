@@ -14,6 +14,12 @@ namespace API.Controllers
         {
             _transactionService = transactionService;
         }
+
+        [HttpGet("getAllTransactionsBySubscription")]
+        public async Task<IActionResult> GetAllTransactionsBySubscription(string id)
+        {
+            return Ok(await _transactionService.GetAllTransactionsBySubscription(Guid.Parse(id)));
+        }
         //[HttpGet]
         //public IActionResult GetTransactions(string key, string account, DateTime fromDate)
         //{

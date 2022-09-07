@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "KiQNk5X4rahk0ST3R6gAzNaXg+FN3wA1vdieL+UAk80RN1MJrA8CngrxmpL4F4rbw5nRJ6EspoFkPu+q4Rp2QA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\Manager\\API\\API.csproj",
-=======
-  "dgSpecHash": "xkLM5ox+988QCVxujyx1oclNnFU0hktn4t/1EsJUghOZUlY71PngHI4sK6WPWPu4/16j/Cu+F68itvoNI5HWHA==",
-  "success": true,
-  "projectFilePath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\API\\API.csproj",
->>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",

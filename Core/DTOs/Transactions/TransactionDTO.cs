@@ -11,9 +11,10 @@ namespace Core.DTOs.Transactions
     {
         [JsonProperty("to")]
         public DateTime? CreatedDate { get; set; }
-        public string CategoryTitle { get; set; }
-        public string Payee { get; set; }
+        //public string CategoryTitle { get; set; }
+        //public string Payee { get; set; }
         //public string Card { get; set; }
         public string Description { get; set; }
+        public float Sum { get; set; }
     }
 }

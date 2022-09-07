@@ -9,7 +9,7 @@ namespace Core.Interfaces.CustomServices
 {
     public interface ITransactionService
     {
-        Task<TransactionDTO> GetAllTransactions(); // { get; set; }
+        Task<IEnumerable<TransactionDTO>> GetAllTransactionsBySubscription(Guid id);
         Task<TransactionDTO> GetTransactionById(string transactionId);
         Task<bool> AddTransactionsFromExcel(string path);
     }

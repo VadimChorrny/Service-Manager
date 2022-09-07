@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "EgMmWBNPYm1vJ4nJxRQtsNvE/mHrrQJk221Jqnz7t5TGitiCfijrxNsHheMGMo+/2zgGEte6frZYspzTYfhTRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj",
-=======
-  "dgSpecHash": "OrOOHB+pUr1/ZnteEebGtUl3MY7qZQUyxdN5QL9NCoDSTgFCbNNec8dzLcfiEl6a/aw8vyk9wlNXbcpI6uuwCA==",
-  "success": true,
-  "projectFilePath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj",
->>>>>>> feab5b441843dacae5c9c67a8f4434bba8ffa037
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\epplus\\6.0.6\\epplus.6.0.6.nupkg.sha512",

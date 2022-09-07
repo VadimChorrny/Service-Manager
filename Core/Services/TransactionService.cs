@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.DTOs.Transactions;
 using Core.Entities.TransactionEntity;
 using Core.Exceptions;
@@ -15,16 +16,20 @@ namespace Core.Services
     public class TransactionService : ITransactionService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public TransactionService(IUnitOfWork unitOfWork)
+        public TransactionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public Task<TransactionDTO> GetAllTransactions()
+        public async Task<IEnumerable<TransactionDTO>> GetAllTransactionsBySubscription(Guid id)
         {
-            throw new NotImplementedException();
+            var subscription = await _unitOfWork.SubscriptionRepository.GetById(id);
+            return _mapper.Map<IEnumerable<TransactionDTO>>(subscription.Transactions);
+            //throw new NotImplementedException();
         }
 
         public Task<TransactionDTO> GetTransactionById(string transactionId)
