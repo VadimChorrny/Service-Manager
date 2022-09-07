@@ -2672,19 +2672,19 @@
   },
   "packageFolders": {
     "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "F:\\Visual Studio\\SDK\\NuGetPackages": {}
+    "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj",
+      "projectUniqueName": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj",
       "projectName": "Core",
-      "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\Core.csproj",
+      "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\Core.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Core\\obj\\",
+      "outputPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "F:\\Visual Studio\\SDK\\NuGetPackages"
+        "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2776,7 +2776,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

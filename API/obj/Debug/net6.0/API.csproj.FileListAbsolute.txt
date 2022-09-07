@@ -101,3 +101,13 @@ C:\Users\Admin\source\repos\Manager\API\obj\Debug\net6.0\ref\API.dll
 C:\Users\Admin\source\repos\Manager\API\obj\Debug\net6.0\API.pdb
 C:\Users\Admin\source\repos\Manager\API\obj\Debug\net6.0\API.genruntimeconfig.cache
 C:\Users\Admin\source\repos\Manager\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.AssemblyInfo.cs
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cs
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\refint\API.dll
+E:\Projects\VisualStudioProjects\Manager (2)\Manager\API\obj\Debug\net6.0\API.pdb

@@ -202,7 +202,7 @@ namespace Core.Services
                                         iElement.Description.Contains(el.Name) ||
                                         jElement.Description.Contains(el.Name));
                                     //SearchField
-                                    //Service service = services.FirstOrDefault(el =>
+                                    //Service service = services.FirstzOrDefault(el =>
                                     //    iElement.Description.Contains(el.Name) || jElement.Description.Contains(el.Name));
                                     Subscription subscription = null;
                                     bool isNewSubscription = false;
@@ -262,25 +262,46 @@ namespace Core.Services
                             }
                             else
                             {
-                                bool IsOneHaveSubscription
-                            }
-                            else if (iElement.Subscription != null)
-                            {
-
-                            }
-                            else if(jElement.Subscription == null && iElement.Subscription != null || iElement.Subscription == null && jElement.Subscription != null)
-                            {
-                                var transactionWithoutSubscription = jElement.Subscription == null ? iElement : jElement;//?? iElement.Subscription;
                                 if (IsDescriptionSuitable(iElement.Description, jElement.Description))
                                 {
-                                    transactionWithoutSubscription.
+                                    
+                                    Transaction transactionWithSubscription = iElement.Subscription != null ? jElement : jElement.Subscription != null ? iElement : null;
+
+                                    Transaction transactionWithoutSubscription = iElement.Subscription == null ? jElement : jElement.Subscription == null ? iElement : null;
+                                    if (transactionWithSubscription != null && transactionWithoutSubscription != null)
+                                    {
+                                        var subscription = transactionWithSubscription.Subscription;
+                                        subscription.BillingCycleId = 6;
+                                        transactionWithoutSubscription.Subscription = subscription;
+
+                                    }
+                                    //if (transaction != null)
+                                    //{
+                                    //    transaction.
+                                    //}
+                                    //transaction.Subscription
                                 }
+                                //bool IsOneHaveSubscription = iElement.Subscription != null  || jElement.Subscription //!= null ? // jElement.Subscription != null || iElement.Subscription != null;
+                                //IsOneHaveSubscription
+                                
                             }
+                            //else if (iElement.Subscription != null)
+                            //{
+
+                            //}
+                            //else if(jElement.Subscription == null && iElement.Subscription != null || iElement.Subscription == null && jElement.Subscription != null)
+                            //{
+                            //    var transactionWithoutSubscription = jElement.Subscription == null ? iElement : jElement;//?? iElement.Subscription;
+                            //    if (IsDescriptionSuitable(iElement.Description, jElement.Description))
+                            //    {
+                            //        transactionWithoutSubscription.
+                            //    }
+                            //}
                         }
                         
 
                     }
-                    
+                    ;
                 }
             }
 

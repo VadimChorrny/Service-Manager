@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "91j/RPfQ6XJjj0mAXpPJPx0lcsh1YeumTd4fvzo1vcngRZ+yfATSYsXOQK+c8Dp5yh3MihUxuFvdrYg8opSD/g==",
+  "dgSpecHash": "bq5AYalU+sXOfyQHog3H6rcLSnv6cq+7905x811iJW9cAoy7NFb+RG9R8rlLmbvitykSAS+jpHGy/FkZ3VA32w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\Manager\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",

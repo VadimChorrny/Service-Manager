@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\source\\repos\\Manager\\Tester\\Tester.csproj": {}
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Tester\\Tester.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\source\\repos\\Manager\\Tester\\Tester.csproj": {
+    "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Tester\\Tester.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\Manager\\Tester\\Tester.csproj",
+        "projectUniqueName": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Tester\\Tester.csproj",
         "projectName": "Tester",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Tester\\Tester.csproj",
+        "projectPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Tester\\Tester.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\Manager\\Tester\\obj\\",
+        "outputPath": "E:\\Projects\\VisualStudioProjects\\Manager (2)\\Manager\\Tester\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "F:\\Visual Studio\\SDK\\NuGetPackages"
+          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.108\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
