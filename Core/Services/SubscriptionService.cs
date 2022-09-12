@@ -451,7 +451,7 @@ namespace Core.Services
             return _mapper.Map<IEnumerable<SubscriptionResponseDTO>>(subscriptions);
         }
 
-        private bool IsDescriptionSuitable(string first, string second)
+        private bool IsDescriptionSuitable2(string first, string second)
         {
             //String.To
             first = first.ToUpper();
@@ -464,6 +464,13 @@ namespace Core.Services
             return elementsFirst.Intersect(elementsSecond).Any();
             //return elementsFirst.SequenceEqual(elementsSecond);
             //elementsFirst.Select( el => el.Length > 3);
+        }
+        private bool IsDescriptionSuitable(string service, string description)
+        {
+            service = service.ToUpper();
+            description = description.ToUpper();
+            description = description.Replace('*', ' ');
+            return service.Contains(description) || description.Contains(service);
         }
         private bool IsQuartalDifference(DateTime from, DateTime to, int maxDayDifference)
         {
