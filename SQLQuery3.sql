@@ -1,0 +1,1 @@
+﻿select s.Id, bc.Name as ['Cycle'], t.Description, t.CreatedDate, t.CurrencyId, t.Sum, ss.Name from Transactions as t join Subscriptions as s on t.SubscriptionId = s.Id join [Services] as ss on ss.Id = s.ServiceId join BillingCycles as bc on s.BillingCycleId = bc.Id

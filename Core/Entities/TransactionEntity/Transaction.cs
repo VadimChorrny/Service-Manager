@@ -19,7 +19,7 @@ namespace Core.Entities.TransactionEntity
         public float Sum { get; set; }
         public int CurrencyId { get; set; }
         public Guid CardId { get; set; }
-        //public Guid? SubscriptionId { get; set; }
+        public Guid? SubscriptionId { get; set; }
         //public Guid? CardId { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual Card Card { get; set; }

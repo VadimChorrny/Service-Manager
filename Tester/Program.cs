@@ -4,6 +4,17 @@ DateTime from = new DateTime(2022, 1, 1);
 DateTime to = new DateTime(2020, 12, 30);
 Console.WriteLine(IsYearDifference(from ,to, 5));
 Console.WriteLine(IsDescriptionSuitable("Cisco*", "www.cisco.com*TRIAL. Cisco"));
+var str = "10000000004, 10000000005";
+Console.WriteLine("Phones");
+Console.WriteLine("10000000004, 10000000005".Trim(' '));
+var symbols = String.Join(';', "10000000004, 10000000005".Trim());//.Split(','));
+   // string.Join("",
+        //"10000000004, 10000000005".Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
+str = str.Trim();
+Console.WriteLine(str);
+Console.WriteLine(symbols);
+Console.WriteLine(String.Join(';', "10000000004, 10000000005".Replace(" ", "").Split(',')));
+;//.Trim(',');
 static bool IsYearDifference(DateTime from, DateTime to, int maxDayDifference)
 {
     Console.WriteLine(Math.Abs(Math.Abs((to.Date - from.Date).Days) - 365));

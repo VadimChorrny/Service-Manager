@@ -11,6 +11,8 @@ namespace Core.Entities.SubscriptionEntity
         public string? Description { get; set; }
         public Guid? ServiceCategoryId { get; set; }
         public Guid? ServiceSubCategoryId { get; set; }
+
+        
         //public int? CountUser { get; set; }
         //public int? UserId { get; set; }
         //Navigation properties

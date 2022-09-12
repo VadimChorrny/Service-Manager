@@ -10,8 +10,11 @@ namespace Core.Entities.SubscriptionEntity
         [Required]
         public string Name { get; set; }
         public Guid ServiceId { get; set; }
+        //public string SearchPhone { get; set; }
+
         //public int? SubscriptionsListId { get; set; }
         //Navigation properties
         public virtual Service Service { get; set; }
+        public virtual ICollection<SearchPhone> SearchPhones { get; set; } = new HashSet<SearchPhone>();
     }
 }

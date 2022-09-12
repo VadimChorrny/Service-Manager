@@ -541,6 +541,25 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SearchPhone",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubscriptionsSearchId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SearchPhone", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SearchPhone_SubscriptionsSearches_SubscriptionsSearchId",
+                        column: x => x.SubscriptionsSearchId,
+                        principalTable: "SubscriptionsSearches",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -581,14 +600,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "b73cbd4c-50ab-4c2d-9e87-ae5c206fe2ce", "Administrator", "ADMINISTRATOR" },
-                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "eb613533-4fba-447b-a072-a5dea9956a79", "User", "USER" }
+                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "096feb0a-6486-4817-b46a-f5a336752124", "Administrator", "ADMINISTRATOR" },
+                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "871c121b-be74-4a35-af16-5945737026fd", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Age", "ConcurrencyStamp", "CountryId", "CurrencyId", "Email", "EmailConfirmed", "Gender", "LangId", "LastActivityDay", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Notification", "PasswordHash", "PayExperience", "PhoneNumber", "PhoneNumberConfirmed", "PremiumMembership", "RegistrationDay", "RoundNumbersToIntegers", "SecurityStamp", "StatusId", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "8e168c0e-07f5-4220-8436-d5f365a745dc", null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7041), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEDksO3F+3MgLdN7iHxMWEbx2x9ugsCWBsOToR2Ga6VU9hDQZTwZVb6GtIa+4M2DmsA==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7006), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
+                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "cc07d81b-39a0-4970-9a95-9bf5f4472709", null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8547), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEFAuE5OFt4/jQmZ0nKMBu/8l8ghbCPKjJR7dzVdKQOHoBUifMct6it14nTrtGRdd6Q==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8513), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
 
             migrationBuilder.InsertData(
                 table: "BillingCycles",
@@ -597,7 +616,10 @@ namespace Infrastructure.Migrations
                 {
                     { 1, null, null, "Monthly" },
                     { 2, null, null, "Yearly" },
-                    { 3, null, null, "Half-Yearly" }
+                    { 3, null, null, "Half-Yearly" },
+                    { 4, null, null, "Weekly" },
+                    { 5, null, null, "Quartaly" },
+                    { 6, null, null, "Tap to fix" }
                 });
 
             migrationBuilder.InsertData(
@@ -757,6 +779,11 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SearchPhone_SubscriptionsSearchId",
+                table: "SearchPhone",
+                column: "SubscriptionsSearchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Services_ServiceCategoryId",
                 table: "Services",
                 column: "ServiceCategoryId");
@@ -848,7 +875,7 @@ namespace Infrastructure.Migrations
                 name: "RemindMes");
 
             migrationBuilder.DropTable(
-                name: "SubscriptionsSearches");
+                name: "SearchPhone");
 
             migrationBuilder.DropTable(
                 name: "Synchronizations");
@@ -858,6 +885,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "SubscriptionsSearches");
 
             migrationBuilder.DropTable(
                 name: "Cards");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220901164930_Init")]
+    [Migration("20220911115650_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,6 +145,21 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             Name = "Half-Yearly"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Weekly"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Quartaly"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Tap to fix"
                         });
                 });
 
@@ -646,6 +661,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SearchPhone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SubscriptionsSearchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriptionsSearchId");
+
+                    b.ToTable("SearchPhone");
+                });
+
             modelBuilder.Entity("Core.Entities.SubscriptionEntity.Service", b =>
                 {
                     b.Property<Guid>("Id")
@@ -923,21 +960,21 @@ namespace Infrastructure.Migrations
                         {
                             Id = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e168c0e-07f5-4220-8436-d5f365a745dc",
+                            ConcurrencyStamp = "cc07d81b-39a0-4970-9a95-9bf5f4472709",
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
                             Gender = 0,
-                            LastActivityDay = new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7041),
+                            LastActivityDay = new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8547),
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "MASTERADMIN",
                             Notification = true,
-                            PasswordHash = "AQAAAAEAACcQAAAAEDksO3F+3MgLdN7iHxMWEbx2x9ugsCWBsOToR2Ga6VU9hDQZTwZVb6GtIa+4M2DmsA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFAuE5OFt4/jQmZ0nKMBu/8l8ghbCPKjJR7dzVdKQOHoBUifMct6it14nTrtGRdd6Q==",
                             PayExperience = 0,
                             PhoneNumber = "XXXXXXXXXXXXX",
                             PhoneNumberConfirmed = true,
                             PremiumMembership = 0,
-                            RegistrationDay = new DateTime(2022, 9, 1, 19, 49, 30, 28, DateTimeKind.Local).AddTicks(7006),
+                            RegistrationDay = new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8513),
                             RoundNumbersToIntegers = false,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
                             TwoFactorEnabled = false,
@@ -1002,14 +1039,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = "2301D884-221A-4E7D-B509-0113DCC043E1",
-                            ConcurrencyStamp = "b73cbd4c-50ab-4c2d-9e87-ae5c206fe2ce",
+                            ConcurrencyStamp = "096feb0a-6486-4817-b46a-f5a336752124",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3",
-                            ConcurrencyStamp = "eb613533-4fba-447b-a072-a5dea9956a79",
+                            ConcurrencyStamp = "871c121b-be74-4a35-af16-5945737026fd",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -1157,6 +1194,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SearchPhone", b =>
+                {
+                    b.HasOne("Core.Entities.SubscriptionEntity.SubscriptionsSearch", null)
+                        .WithMany("SearchPhones")
+                        .HasForeignKey("SubscriptionsSearchId");
+                });
+
             modelBuilder.Entity("Core.Entities.SubscriptionEntity.Service", b =>
                 {
                     b.HasOne("Core.Entities.CategoryEntity.ServiceCategory", "ServiceCategory")
@@ -1220,13 +1264,15 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.SubscriptionEntity.Subscription", null)
+                    b.HasOne("Core.Entities.SubscriptionEntity.Subscription", "Subscription")
                         .WithMany("Transactions")
                         .HasForeignKey("SubscriptionId");
 
                     b.Navigation("Card");
 
                     b.Navigation("Currency");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("Core.Entities.UserEntity.User", b =>
@@ -1335,6 +1381,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Core.Entities.SubscriptionEntity.SubscriptionsSearch", b =>
+                {
+                    b.Navigation("SearchPhones");
                 });
 
             modelBuilder.Entity("Core.Entities.UserEntity.User", b =>

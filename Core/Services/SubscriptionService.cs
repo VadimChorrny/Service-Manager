@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.DTOs.Monobank;
 using Core.DTOs.Subscriptions;
 using Core.DTOs.Transactions;
 using Core.Entities.BillingCycleEntity;
 using Core.Entities.CardEntity;
 using Core.Entities.CurrencyEntity;
+using Core.Entities.Enums;
 using Core.Entities.SubscriptionEntity;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
@@ -24,6 +26,8 @@ namespace Core.Services
     {
         HttpClient client = new HttpClient();
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
         public Task<SubscriptionResponseDTO> GetAllSubscriptionsFromMonobank(string token, AccountMonobankDTO accountMonobank, DateTime fromTime)
         {
             
@@ -109,7 +113,7 @@ namespace Core.Services
                     }
                     else
                     {
-                        throw new HttpException("Monobank API Error", System.Net.HttpStatusCode.BadRequest);
+                        throw new HttpException($"Monobank API Error {response.Content.ReadAsStringAsync().Result}", System.Net.HttpStatusCode.BadRequest);
                     }
                     //user.Banks.Add();
                     //JsonConvert.
@@ -120,7 +124,7 @@ namespace Core.Services
             //throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptions(string userId)
+        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptions2(string userId)
         {
             var user = await _unitOfWork.UserRepository.GetById(userId);
             if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
@@ -133,11 +137,13 @@ namespace Core.Services
             //var services = await _unitOfWork.ServiceRepository.Get();
             var subscriptionSearches = await _unitOfWork.SubscriptionsSearchRepository.Get(); 
             List<SubscriptionResponseDTO> result = new List<SubscriptionResponseDTO>();
-            for (int i = 0; i < transactions.Count(); i++)
+            for (int i = 0; i < transactions.Count(); ++i)
             {
-                for (int j = transactions.Count() - 1; j > 0; j--)
+                for(int j=1; j < transactions.Length; ++j)
+                //for (int j = transactions.Count() - 1; j > 0; j--)
                 {
-                    
+                    //int ad = transactions.Count();
+                    //int ad2 = transactions.Length;
                     if (i != j)
                     {
                         var iElement = transactions[i];
@@ -253,8 +259,8 @@ namespace Core.Services
                                     await _unitOfWork.SaveChangesAsync();
 
                                     //await _unitOfWork.TransactionRepository.Delete()
-                                    ++i;
-                                    j = 0;
+                                    //++i;
+                                    //j = 0;
                                 }
                                 //if (services != null && transactions.ElementAt(i).Description.Contains(service.Name) &&
                                 //        transactions.ElementAt(j).Description.Contains(service.Name))
@@ -265,15 +271,15 @@ namespace Core.Services
                                 if (IsDescriptionSuitable(iElement.Description, jElement.Description))
                                 {
                                     
-                                    Transaction transactionWithSubscription = iElement.Subscription != null ? jElement : jElement.Subscription != null ? iElement : null;
+                                    Transaction transactionWithSubscription = iElement.Subscription != null ? iElement : jElement.Subscription != null ? jElement : null;
 
                                     Transaction transactionWithoutSubscription = iElement.Subscription == null ? jElement : jElement.Subscription == null ? iElement : null;
-                                    if (transactionWithSubscription != null && transactionWithoutSubscription != null)
+                                    if (transactionWithSubscription != null && transactionWithoutSubscription != null &&  transactionWithoutSubscription.CreatedDate > transactionWithSubscription.CreatedDate )
                                     {
                                         var subscription = transactionWithSubscription.Subscription;
                                         subscription.BillingCycleId = 6;
                                         transactionWithoutSubscription.Subscription = subscription;
-
+                                        await _unitOfWork.SaveChangesAsync();
                                     }
                                     //if (transaction != null)
                                     //{
@@ -304,16 +310,145 @@ namespace Core.Services
                     ;
                 }
             }
-
+            //_unitOfWork.
+            //var subscriptions = transactions.Where(s => s.Subscription != null).Select(s => s.Subscription).Distinct();//.GroupBy(t => t.Subscription).Select(x=> x.)//.Where(x => x.Subscription != null).Select(x => x.Subscription).;
             //foreach (var transaction in transactions)
             //{
-            //    if (transaction.Subscription != null)
+            //    if (transaction.Subscription == null)
             //    {
-                    
+            //        subscriptions.
             //    }
             //}
 
             return result;
+        }
+
+        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptions(string userId)
+        {
+            var user = await _unitOfWork.UserRepository.GetById(userId);
+            if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
+            var transactions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).OrderByDescending(el => el.CreatedDate).ToArray();//.Concat()//user.Banks.Join//user.Banks.Select(b => b.Cards.Select(c => c.Transactions));
+            //var subscriptions = 
+            //foreach (var trans in transactions)
+            //{
+
+            //}
+            //var services = await _unitOfWork.ServiceRepository.Get();
+            var subscriptionsSearches = (await _unitOfWork.SubscriptionsSearchRepository.Get()).ToArray();
+            List<SubscriptionResponseDTO> result = new List<SubscriptionResponseDTO>();
+            foreach (var transaction in transactions)
+            {
+                //if (transaction.Description)
+                //{
+                //var subscriptionsSearches = subscriptionSearches as SubscriptionsSearch[] ?? subscriptionSearches.ToArray();
+                if (transaction.Subscription == null)
+                {
+                    SubscriptionsSearch subscriptionsSearch =
+                        subscriptionsSearches.FirstOrDefault(el =>
+                            IsDescriptionSuitable(el.Name, transaction.Description));
+                    if (subscriptionsSearch != null)
+                    {
+                        var service = subscriptionsSearch.Service;
+                        var subscription = transactions
+                            .FirstOrDefault(el => el?.Subscription?.Service == service)
+                            ?.Subscription;
+                        if (subscription == null)
+                        {
+                            subscription = new Subscription {BillingCycleId = 6, IsCustom = false, Service = service};
+                            await _unitOfWork.SubscriptionRepository.Insert(subscription);
+                            subscription.Transactions.Add(transaction);
+                            //subscription.Transactions.Add(transaction);
+                        }
+                        else
+                        {
+                            subscription.Transactions.Add(transaction);
+                             _unitOfWork.SubscriptionRepository.Update(subscription);
+                        }
+                        //else
+                        //{
+                        //}
+                    }
+                    else
+                    {
+                        //byte countTransactionMainAdded = 0;
+                        //bool isSubscription = false;
+                        Subscription subscription = null;
+                        foreach (var transactionCustom in transactions)
+                        {
+                            if (transactionCustom != transaction && transactionCustom.Subscription is {ServiceId: null})
+                            {
+                                if (IsDescriptionSuitable(transaction.Description, transactionCustom.Description))
+                                {
+                                    //isSubscription = true;
+                                    //var
+                                    subscription = transactions.FirstOrDefault(el => el.Subscription != null &&
+                                            IsDescriptionSuitable(el.Subscription?.Name, transactionCustom.Description))
+                                        ?.Subscription;
+                                    if (subscription == null)
+                                    {
+                                        subscription= new Subscription { BillingCycleId = 6, IsCustom = true, Name = transaction.Description};
+                                        await _unitOfWork.SubscriptionRepository.Insert(subscription);
+                                    }
+
+                                    subscription.Transactions?.Add(transactionCustom);
+                                }
+                            }
+                        }
+                        subscription?.Transactions?.Add(transaction);
+                        //isSubscription ? 
+                    }
+                }
+
+                //.Contains(el.Name)
+                //}
+                //transactions.Where(t => t.Description transaction.Description && t != transaction) 
+                await _unitOfWork.SaveChangesAsync();
+            }
+            var groupedTransactions = transactions?.GroupBy(t => t.Subscription); //sorted
+            foreach (var transactionsElement in groupedTransactions)
+            {
+                if (transactionsElement.Count() >= 2)
+                {
+                    var sortedTransactions = transactionsElement?.OrderByDescending(t => t.CreatedDate).ToArray();
+                    if (sortedTransactions[0].CurrencyId == sortedTransactions[1].CurrencyId)
+                    {
+                        if (IsMonthDifference(sortedTransactions[0].CreatedDate, sortedTransactions[1].CreatedDate, 5))
+                        {
+                            sortedTransactions[0].Subscription.BillingCycleId = (int)BillingCycleEnum.Monthly;
+
+                        }
+                        else if (IsYearDifference(sortedTransactions[0].CreatedDate, sortedTransactions[1].CreatedDate, 5))
+                        {
+                            sortedTransactions[0].Subscription.BillingCycleId = (int)BillingCycleEnum.Yearly;
+                        }
+                        else if (IsWeekDifference(sortedTransactions[0].CreatedDate, sortedTransactions[1].CreatedDate, 2))
+                        {
+                            sortedTransactions[0].Subscription.BillingCycleId = (int)BillingCycleEnum.Weekly;
+                        }
+                        else if (IsQuartalDifference(sortedTransactions[0].CreatedDate, sortedTransactions[1].CreatedDate, 10))
+                        {
+                            sortedTransactions[0].Subscription.BillingCycleId = (int)BillingCycleEnum.Quarterly;
+                        }
+                        else if (IsHalfYearDifference(sortedTransactions[0].CreatedDate, sortedTransactions[1].CreatedDate, 10))
+                        {
+                            sortedTransactions[0].Subscription.BillingCycleId = (int)BillingCycleEnum.HalfYearly;
+                        }
+                    }
+                }
+
+
+            }
+                
+            await _unitOfWork.SaveChangesAsync();
+            return null;
+        }
+
+        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptionsByUser(string userId)
+        {
+            var user = await _unitOfWork.UserRepository.GetById(userId);
+            if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
+            var subscriptions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).Select(el => el.Subscription);
+            return _mapper.Map<IEnumerable<SubscriptionResponseDTO>>(subscriptions);
         }
 
         private bool IsDescriptionSuitable(string first, string second)
@@ -396,9 +531,10 @@ namespace Core.Services
             }
         }
         //public 
-        public SubscriptionService(IUnitOfWork unitOfWork)
+        public SubscriptionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
     }
 }

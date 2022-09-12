@@ -35,5 +35,11 @@ namespace API.Controllers
         {
             return Ok(await _subscriptionService.GetSubscriptions(userId));
         }
+
+        [HttpGet("getSubscriptionsByUserId")]
+        public async Task<IActionResult> GetSubscriptionsByUserId(string userId)
+        {
+            return Ok(await _subscriptionService.GetSubscriptionsByUser(userId));
+        }
     }
 }

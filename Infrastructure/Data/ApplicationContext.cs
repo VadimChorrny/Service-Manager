@@ -86,6 +86,7 @@ namespace Infrastructure.Data
             modelBuilder.Entity<UserBank>().HasOne<Bank>(ub => ub.Bank).WithMany(b => b.UserBanks).HasForeignKey(ub => ub.BankId);
             //modelBuilder.Entity<Subscription>().HasOne<User>(s => s.User).WithMany(u => u.Subscriptions).HasForeignKey(s => s.UserId);
             modelBuilder.Entity<Transaction>().HasOne<Card>(t => t.Card).WithMany(c => c.Transactions).HasForeignKey(t => t.CardId);
+            modelBuilder.Entity<Transaction>().HasOne <Subscription>(t => t.Subscription).WithMany(s => s.Transactions).HasForeignKey(t => t.SubscriptionId).OnDelete(DeleteBehavior.SetNull);
             //modelBuilder.Entity
             //modelBuilder.Entity<Card>().On
             //ApplicationDbInitializer.SeedUsers(_userManager);

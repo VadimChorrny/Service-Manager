@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -45,12 +46,13 @@ namespace Core.Services
                     ExcelWorksheet mainSheet = package.Workbook.Worksheets[0];
                     for (int i = 2; i < mainSheet.Dimension.Rows; i++)
                     {
-                        if (mainSheet.Cells[i, 1].Value != null && mainSheet.Cells[i, 2].Value != null &&
+                        if (mainSheet.Cells[i, 1].Value != null && 
                             mainSheet.Cells[i, 3].Value != null && mainSheet.Cells[i, 4].Value != null &&
-                            mainSheet.Cells[i, 5].Value != null && mainSheet.Cells[i, 6].Value != null)
+                            mainSheet.Cells[i, 6].Value != null)
+                        //mainSheet.Cells[i, 2].Value != null &&
+                        // mainSheet.Cells[i, 5].Value != null &&
                         {
                             string name = mainSheet.Cells[i, 1].Value as string;
-                            string url = mainSheet.Cells[i, 2].Value as string;
                             string logo = mainSheet.Cells[i, 3].Value as string;
                             string categoryName = mainSheet.Cells[i, 4].Value as string;
                             string subCategoryName = mainSheet.Cells[i, 5].Value as string;
@@ -63,7 +65,11 @@ namespace Core.Services
                                 await _unitOfWork.ServiceRepository.Insert(service);
                             }
 
-                            service.URL = url;
+                            if (mainSheet.Cells[i, 6].Value != null)
+                            {
+                                string url = mainSheet.Cells[i, 2].Value as string;
+                                service.URL = url;
+                            }
                             ServiceCategory serviceCategory =
                                 (await _unitOfWork.ServiceCategoryRepository.Get(el => el.Name == categoryName))
                                 ?.FirstOrDefault();
@@ -97,9 +103,27 @@ namespace Core.Services
                             }
 
                             subscriptionsSearch.Name = searchField;
+                            if (mainSheet.Cells[i, 7].Value != null)
+                            {
+                                var phones = mainSheet.Cells[i, 7].Value;
+                                //var phonesWithType 
+                                List<SearchPhone> phonesStrings = null;
+                                if (phones is double)
+                                {
+                                    //phones = ;
+                                    phonesStrings = (Convert.ToDouble(phones).ToString(CultureInfo.InvariantCulture))?.Replace(" ", "").Split(',').Select(el => new SearchPhone{ Phone = el}).ToList();//.ToList();
+                                }
+                                else
+                                {
+                                    phonesStrings = ((string)phones)?.Replace(" ", "").Split(',').Select(el => new SearchPhone{ Phone = el}).ToList();//.ToList();
+
+                                }
+                                subscriptionsSearch.SearchPhones = phonesStrings; //. //= 
+                            }
                             //await _unitOfWork.SubscriptionsSearchRepository.Insert(new SubscriptionsSearch {  Name= searchField, Service = service});
                             //_unitOfWork.ServiceCategoryRepository
                             await _unitOfWork.SaveChangesAsync();
+                            //await _unitOfWork.BankRepository.SaveChangesAsync();
                         }
 
                         

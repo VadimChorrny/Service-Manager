@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Core.DTOs.Subscriptions;
 using Core.DTOs.Transactions;
 using Core.DTOs.UserDTO;
+using Core.Entities.SubscriptionEntity;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
 using Core.Interfaces.CustomInterfaces;
@@ -29,6 +31,10 @@ namespace Core
                 mc.CreateMap<User, UserDTO>().ReverseMap();
                 mc.CreateMap<RegisterUserDTO, User>().ReverseMap();
                 mc.CreateMap<TransactionDTO, Transaction>().ReverseMap(); //ForMember(dest => dest.);
+                mc.CreateMap<Subscription, SubscriptionResponseDTO>()
+                    .ForMember(dest => dest.BillingCycle, act => act.MapFrom(src=> src.BillingCycle.Name))
+                    .ForMember(dest => dest.ServiceName, act => act.MapFrom(src=> src.Service.Name))
+                    .ReverseMap();
             });
 
             IMapper mapper = configures.CreateMapper();
