@@ -49,5 +49,7 @@ namespace Core.Entities.UserEntity
         //public virtual ICollection<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
         //public virtual ICollection<Subscription> Subscriptions { get; set; } = new HashSet<Subscription>();
         public virtual PayExperience PayExperience { get; set; } // enum
+        public string ConfirmationEmailToken { get; set; }
+        public DateTimeOffset? ConfirmationEmailTokenExpirationDate { get; internal set; }
     }
 }

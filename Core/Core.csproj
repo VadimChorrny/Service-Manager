@@ -15,6 +15,7 @@
     <PackageReference Include="EPPlus" Version="6.0.6" />
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+    <PackageReference Include="Mailjet.Api" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.7" />
