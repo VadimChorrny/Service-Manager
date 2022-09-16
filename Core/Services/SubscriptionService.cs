@@ -345,7 +345,7 @@ namespace Core.Services
                 {
                     SubscriptionsSearch subscriptionsSearch =
                         subscriptionsSearches.FirstOrDefault(el =>
-                            IsDescriptionSuitable(el.Name, transaction.Description));
+                            IsDescriptionSuitable(el.Name, transaction.Description) ||  el.SearchPhones.Any(ph => transaction.Description.Contains(ph.Phone)));
                     if (subscriptionsSearch != null)
                     {
                         var service = subscriptionsSearch.Service;
@@ -364,6 +364,7 @@ namespace Core.Services
                             subscription.Transactions.Add(transaction);
                              _unitOfWork.SubscriptionRepository.Update(subscription);
                         }
+                        await _unitOfWork.SaveChangesAsync();
                         //else
                         //{
                         //}
@@ -388,13 +389,20 @@ namespace Core.Services
                                     {
                                         subscription= new Subscription { BillingCycleId = 6, IsCustom = true, Name = transaction.Description};
                                         await _unitOfWork.SubscriptionRepository.Insert(subscription);
+                                        subscription.Transactions?.Add(transactionCustom);
                                     }
+                                    else
+                                    {
+                                        subscription.Transactions?.Add(transactionCustom);
+                                        _unitOfWork.SubscriptionRepository.Update(subscription);
+                                    }
+                                    await _unitOfWork.SaveChangesAsync();
 
-                                    subscription.Transactions?.Add(transactionCustom);
                                 }
                             }
                         }
                         subscription?.Transactions?.Add(transaction);
+                        _unitOfWork.SubscriptionRepository.Update(subscription);
                         //isSubscription ? 
                     }
                 }
