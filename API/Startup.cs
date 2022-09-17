@@ -40,6 +40,7 @@ namespace API
             services.AddCustomServices();
 
             services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
+            services.Configure<MailJetOptions>(Configuration.GetSection(nameof(MailJetOptions)));
 
             services.AddAutoMapper();
 

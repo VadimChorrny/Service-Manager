@@ -1,6 +1,8 @@
-﻿using Core.DTOs.Google;
+﻿using Core.DTOs.EmailDTO;
+using Core.DTOs.Google;
 using Core.DTOs.UserDTO;
 using Core.Interfaces.CustomInterfaces;
+using Core.Interfaces.CustomServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,13 @@ namespace API.Controllers
     {
         private IAccountService _accountService;
         private readonly ILogger<AccountController> _logger;
-        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
+        private readonly IEmailService _emailService;
+
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger, IEmailService emailService)
         {
             _accountService = accountService;
             _logger = logger;
+            _emailService = emailService;
         } // I love u
 
         [HttpPost("register")]
@@ -48,6 +53,12 @@ namespace API.Controllers
         {
             var tokens = await _accountService.RefreshTokenAsync(userTokensDTO);
             return Ok(tokens);
+        }
+        [HttpPost("confirm-email")]
+        public async Task<IActionResult> ConfirmEmailAsync(EmailConfirmationTokenRequestDTO request)
+        {
+            await _emailService.ConfirmEmailAsync(request);
+            return Ok();
         }
     }
 }
