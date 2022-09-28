@@ -27,7 +27,8 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterUserDTO data)
         {
-            await _accountService.RegisterAsync(data);
+            var callbackUrl = Request.GetTypedHeaders().Referer.ToString();
+            await _accountService.RegisterAsync(data, callbackUrl);
             return Ok("Successfully created new user!");
         }
 

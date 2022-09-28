@@ -5,6 +5,8 @@ using Core.DTOs.UserDTO;
 using Core.Entities.SubscriptionEntity;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
+using Core.Helpers;
+using Core.Interfaces;
 using Core.Interfaces.CustomInterfaces;
 using Core.Interfaces.CustomServices;
 using Core.Services;
@@ -22,6 +24,8 @@ namespace Core
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITemplateHelper, TemplateHelper>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

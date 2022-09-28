@@ -25,19 +25,21 @@ namespace Core.Services
         protected UserManager<User> _userManager;
         private IRepository<RefreshToken> _refreshTokenRepository;
         protected IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
         public AccountService(
             IOptions<JwtOptions> jwtOptions,
             IJwtService jwtService,
             UserManager<User> userManager,
             IRepository<RefreshToken> refreshTokenRepository,
-            IConfiguration configuration)
+            IConfiguration configuration, IEmailService emailService)
         {
             _jwtOptions = jwtOptions;
             _jwtService = jwtService;
             _userManager = userManager;
             _refreshTokenRepository = refreshTokenRepository;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<AuthenticationDTO> LoginAsync(string email, string password)
@@ -107,7 +109,7 @@ namespace Core.Services
             return tokens;
         }
 
-        public async Task RegisterAsync(RegisterUserDTO data)
+        public async Task RegisterAsync(RegisterUserDTO data, string callbackUrl)
         {
             if (data == null)
                 throw new HttpException($"Error with create new account!", HttpStatusCode.NotFound);
@@ -133,6 +135,7 @@ namespace Core.Services
 
                 throw new HttpException(messageBuilder.ToString(), System.Net.HttpStatusCode.BadRequest);
             }
+            await _emailService.SendConfirmationEmailAsync(user, callbackUrl);
         }
 
         private async Task<RefreshToken> CreateRefreshToken(string authorId)

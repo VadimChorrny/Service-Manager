@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Core.Services
 {
@@ -21,7 +22,7 @@ namespace Core.Services
     {
         private readonly ITemplateHelper _templateHelper;
         private readonly UserManager<Entities.UserEntity.User> _userManager;
-        private readonly MailJetOptions _mailJetOptions;
+        private readonly IOptions<MailJetOptions> _mailJetOptions;
         private readonly IRepository<Entities.UserEntity.User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -29,7 +30,7 @@ namespace Core.Services
             ITemplateHelper templateHelper,
             UserManager<Entities.UserEntity.User> userManager,
             IRepository<Entities.UserEntity.User> userRepository,
-            MailJetOptions mailJetOptions, IUnitOfWork unitOfWork)
+            IOptions<MailJetOptions> mailJetOptions, IUnitOfWork unitOfWork)
         {
             _templateHelper = templateHelper;
             _userManager = userManager;
@@ -46,8 +47,8 @@ namespace Core.Services
 
             await _userManager.UpdateAsync(user);
 
-            if (!callbackUrl.Contains("swagger"))
-            {
+            //if (!callbackUrl.Contains("swagger"))
+            //{
                 var message = await _templateHelper
             .GetTemplateHtmlAsStringAsync<ConfirmationEmailDTO>(
             "ConfirmationEmail",
@@ -60,15 +61,15 @@ namespace Core.Services
             });
 
                 await SendEmailAsync(user.Email, "Confirm your email", message);
-            }
+            //}
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            var client = new MailjetClient(_mailJetOptions.ApiKey);
+            var client = new MailjetClient(_mailJetOptions.Value.ApiKey, _mailJetOptions.Value.SecretKey); //{Version = ApiVersion.V3_1}
             MailjetRequest request = new MailjetRequest
             {
-                Resource = Send.Resource,
+                Resource = SendV31.Resource,
             }
             .Property(Send.Messages, new JArray {
      new JObject {
@@ -86,10 +87,10 @@ namespace Core.Services
           "Email",
            email
          },
-         //   {
-         // "Name",
-         // "Alexander"
-         //}
+            {
+          "Name",
+          "Alexander"
+         }
         }
        }
       }, {

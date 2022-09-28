@@ -72,7 +72,8 @@ namespace Core.Services
             var claims = new List<Claim>
             {
                 new Claim("Id", user.Id),
-                new Claim("Email", user.UserName),
+                new Claim("Email", user.Email),
+                new Claim("Name", user.UserName),
             };
             //user.Roles
             //var roles = userManager.GetRolesAsync(user).Result;

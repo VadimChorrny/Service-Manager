@@ -51,7 +51,7 @@ namespace API
             services.AddResponseCaching();
 
             services.AddJwtAuthentication(Configuration);
-
+            services.AddMvcCore().AddRazorViewEngine();
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["FacebookAuthSettings:AppId"];
