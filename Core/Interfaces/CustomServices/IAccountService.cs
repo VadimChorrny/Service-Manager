@@ -10,8 +10,9 @@ namespace Core.Interfaces.CustomInterfaces
         Task RegisterAsync(RegisterUserDTO data, string callbackUrl);
         Task<AuthenticationDTO> LoginAsync(string email, string password);
         Task<AuthenticationDTO> GenerateTokens(User user);
-        Task LogoutAsync(AuthenticationDTO userTokensDTO);
-        Task SentResetPasswordTokenAsync(string userEmail);
+        Task LogoutAsync(UserLogoutDTO userTokensDTO);
+        //Task SentResetPasswordTokenAsync(ResetPasswordDTO resetPasswordDTO, string callbackUrl);
+        Task ChangePassword(ChangePasswordDTO changePasswordDTO);
         Task<User> AuthenticateGoogleUserAsync(GoogleUserRequest request);
         Task<AuthenticationDTO> RefreshTokenAsync(AuthenticationDTO authorizationDTO);
         ClaimsPrincipal ValidateToken(string jwtToken);

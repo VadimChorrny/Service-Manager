@@ -1,7 +1,6 @@
 ﻿using Core.DTOs.Google;
 using Core.DTOs.UserDTO;
 using Core.Entities;
-using Core.Entities.UserEntity;
 using Core.Exceptions;
 using Core.Helpers;
 using Core.Interfaces;
@@ -14,7 +13,9 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using Mailjet.Client.Resources;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
+using User = Core.Entities.UserEntity.User;
 
 namespace Core.Services
 {
@@ -54,6 +55,11 @@ namespace Core.Services
             }
 
             return await GenerateTokens(user);
+        }
+
+        public Task ChangePassword(ChangePasswordDTO changePasswordDTO)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> AuthenticateGoogleUserAsync(GoogleUserRequest request)
@@ -147,18 +153,44 @@ namespace Core.Services
                 UserId = authorId
             };
             await _refreshTokenRepository.Insert(refreshTokenEntity);
+            await _refreshTokenRepository.SaveChangesAsync();
             return refreshTokenEntity;
         }
 
-        public Task LogoutAsync(AuthenticationDTO userTokensDTO)
+        public async Task LogoutAsync(UserLogoutDTO userTokensDTO)
         {
-            throw new NotImplementedException();
+            var refreshToken = (await _refreshTokenRepository.Get(r => r.Token == userTokensDTO.RefreshToken)).FirstOrDefault();
+            if (refreshToken == null)
+            {
+                throw new HttpException("Refresh token is null", HttpStatusCode.Forbidden);
+            }
+            await _refreshTokenRepository.Delete(refreshToken.Id);
+            await _refreshTokenRepository.SaveChangesAsync();
         }
 
-        public Task SentResetPasswordTokenAsync(string userEmail)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task SentResetPasswordTokenAsync(ResetPasswordDTO forgotPasswordModel, string callbackUrl)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(forgotPasswordModel.Email);
+        //    if (user == null)
+        //        throw new HttpException("Not found user", HttpStatusCode.BadRequest);
+        //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+        //    var frontEndURL = _configuration.GetValue<string>("FrontEndURL");
+
+        //    //var callbackUrl =
+        //    //    $"{frontEndURL}/resetpassword?userId={user.Id}&" +
+        //    //    $"code={WebUtility.UrlEncode(token)}";
+
+        //    //Url.Action(nameof(ResetPassword), "AccountController", new { token, email = user.Email }, Request.Scheme);
+        //    //var message = new Message(new string[] { forgotPasswordModel.Email }, "Reset password token",
+        //    //    $"Please reset password by clicking here: " +
+        //    //    $"<a href='{callbackUrl}'>Відновити</a>");
+        //    _emailService.SendEmail(message);
+
+            
+        //    //var user = await _userManager.FindByIdAsync(model.UserId);
+        //    //var res = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+        //}
 
         public async Task<AuthenticationDTO> RefreshTokenAsync(AuthenticationDTO authorizationDTO)
         {

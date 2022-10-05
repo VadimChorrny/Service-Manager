@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTOs.UserDTO;
 using Microsoft.Extensions.Options;
 
 namespace Core.Services
@@ -49,22 +50,47 @@ namespace Core.Services
 
             //if (!callbackUrl.Contains("swagger"))
             //{
-                var message = await _templateHelper
-            .GetTemplateHtmlAsStringAsync<ConfirmationEmailDTO>(
-            "ConfirmationEmail",
-            new ConfirmationEmailDTO
-            {
-                Name = user.Name,
-                Surname = user.Surname,
-                Link = callbackUrl + "confirm-email/" +
-                       user.ConfirmationEmailToken + "/"
-            });
+            var message = await _templateHelper
+                .GetTemplateHtmlAsStringAsync<ConfirmationEmailDTO>(
+                    "ConfirmationEmail",
+                    new ConfirmationEmailDTO
+                    {
+                        Name = user.Name,
+                        Surname = user.Surname,
+                        Link = callbackUrl + "confirm-email/" +
+                               user.ConfirmationEmailToken + "/"
+                    });
 
-                await SendEmailAsync(user.Email, "Confirm your email", message);
+            await SendEmailAsync(user.Email, "Confirm your email", message);
             //}
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendResetPasswordEmailAsync(ResetPasswordDTO forgotPasswordModel, string callbackUrl)
+            {
+                var user = await _userManager.FindByEmailAsync(forgotPasswordModel.Email);
+                if (user == null) throw new HttpException("User doesn`t exists", HttpStatusCode.BadRequest);
+                var token = await _userManager
+                    .GeneratePasswordResetTokenAsync(user);
+
+                
+
+            if (!callbackUrl.Contains("swagger"))
+            {
+                var message = await _templateHelper
+                    .GetTemplateHtmlAsStringAsync<ResetPasswordEmailDTO>(
+                        "ResetPasswordEmail",
+                        new ResetPasswordEmailDTO
+                        {
+                            Name = user.Name,
+                            Link = callbackUrl + "confirm-email/" +
+                                   user.ConfirmationEmailToken + "/"
+                        });
+
+                await SendEmailAsync(user.Email, "Reset password", message);
+            }
+        }
+
+            public async Task SendEmailAsync(string email, string subject, string message)
         {
             var client = new MailjetClient(_mailJetOptions.Value.ApiKey, _mailJetOptions.Value.SecretKey); //{Version = ApiVersion.V3_1}
             MailjetRequest request = new MailjetRequest

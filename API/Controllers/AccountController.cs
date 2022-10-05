@@ -61,5 +61,19 @@ namespace API.Controllers
             await _emailService.ConfirmEmailAsync(request);
             return Ok();
         }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
+        {
+            var callbackUrl = Request.GetTypedHeaders().Referer.ToString();
+            await _emailService.SendResetPasswordEmailAsync(resetPasswordDTO, callbackUrl);
+            return Ok();
+        }
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] UserLogoutDTO userLogoutDTO)
+        {
+            await _accountService.LogoutAsync(userLogoutDTO);
+            return Ok();
+        }
     }
 }
