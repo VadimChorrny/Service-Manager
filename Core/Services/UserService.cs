@@ -50,7 +50,7 @@ namespace Core.Services
 
         public async Task<IEnumerable<UserDTO>> Get()
         {
-            return _mapper.Map<IEnumerable<UserDTO>>(await _unitOfWork.UserRepository.Get());
+            return _mapper.Map<IEnumerable<UserDTO>>(await _unitOfWork.UserRepository.GetAllAsync());
         }
 
         public async Task<UserDTO> GetUserById(string id)

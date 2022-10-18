@@ -72,8 +72,10 @@ namespace Core.Services
                 var token = await _userManager
                     .GeneratePasswordResetTokenAsync(user);
 
-                
 
+                callbackUrl =
+                    $"{callbackUrl}reset-password?userId={user.Id}&" +
+                    $"code={WebUtility.UrlEncode(token)}";
             if (!callbackUrl.Contains("swagger"))
             {
                 var message = await _templateHelper
@@ -82,8 +84,7 @@ namespace Core.Services
                         new ResetPasswordEmailDTO
                         {
                             Name = user.Name,
-                            Link = callbackUrl + "confirm-email/" +
-                                   user.ConfirmationEmailToken + "/"
+                            Link = callbackUrl
                         });
 
                 await SendEmailAsync(user.Email, "Reset password", message);
@@ -160,7 +161,7 @@ namespace Core.Services
 
             public async Task ConfirmEmailAsync(EmailConfirmationTokenRequestDTO request)
             {
-                var user = (await _unitOfWork.UserRepository.Get(el => el.ConfirmationEmailToken == request.Token)).FirstOrDefault();
+                var user = (await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(el => el.ConfirmationEmailToken == request.Token));
                 //var user = await _userRepository.GetBySpecAsync(
                 // new UserSpecification.GetByConfirmationToken(request.Token));
 

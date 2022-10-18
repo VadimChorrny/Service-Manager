@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220916174701_ConfirmEmail")]
-    partial class ConfirmEmail
+    [Migration("20221012091757_PrivatColumns")]
+    partial class PrivatColumns
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Links")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LinksAPI")
+                    b.Property<string>("LinksApi")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Logo")
@@ -69,7 +69,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             CountryId = 1,
                             Links = "www.monobank.ua",
-                            LinksAPI = "https://api.monobank.ua/docs/",
+                            LinksApi = "https://api.monobank.ua/docs/",
                             Name = "Monobank"
                         },
                         new
@@ -77,7 +77,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             CountryId = 1,
                             Links = "https://privatbank.ua/",
-                            LinksAPI = "https://api.privatbank.ua/",
+                            LinksApi = "https://api.privatbank.ua/",
                             Name = "PrivatBank"
                         },
                         new
@@ -85,7 +85,7 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             CountryId = 1,
                             Links = "https://ukrsibbank.com",
-                            LinksAPI = "",
+                            LinksApi = "",
                             Name = "UKRSIBBANK"
                         },
                         new
@@ -93,7 +93,7 @@ namespace Infrastructure.Migrations
                             Id = 4,
                             CountryId = 2,
                             Links = "www.chase.com",
-                            LinksAPI = "https://www.chase.com/digital/data-sharing",
+                            LinksApi = "https://www.chase.com/digital/data-sharing",
                             Name = "Chase"
                         },
                         new
@@ -101,7 +101,7 @@ namespace Infrastructure.Migrations
                             Id = 5,
                             CountryId = 2,
                             Links = "http://www.wellsfargo.com",
-                            LinksAPI = "https://developer.wellsfargo.com/",
+                            LinksApi = "https://developer.wellsfargo.com/",
                             Name = "Wells Fargo Bank"
                         });
                 });
@@ -172,6 +172,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MerchantId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MerchantPassword")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("UserBankId")
                         .HasColumnType("uniqueidentifier");
 
@@ -230,12 +236,447 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "USA"
+                            Name = "Denmark"
                         },
                         new
                         {
                             Id = 3,
+                            Name = "Norway"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Switzerland"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Sweden"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Finland"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Netherlands"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "New Zealand"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Germany"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Luxembourg"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Iceland"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "United Kingdom"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Ireland"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Austria"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "Canada"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "Hong Kong"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "Singapore"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Name = "Australia"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Name = "United States"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "Japan"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Name = "Malta"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Name = "Estonia"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Name = "Belgium"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Name = "France"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Name = "Taiwan"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Name = "Spain"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Name = "Portugal"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Name = "Slovenia"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Name = "Czech Republic"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Name = "South Korea"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Name = "Italy"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Name = "Israel"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Name = "Slovakia"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Name = "Lithuania"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Name = "Cyprus"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Name = "Latvia"
+                        },
+                        new
+                        {
+                            Id = 37,
                             Name = "Poland"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Name = "Chile"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Name = "Costa Rica"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Name = "Uruguay"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Name = "United Arab Emirates"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Name = "Malaysia"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Name = "Greece"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Name = "Qatar"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Name = "Mauritius"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Name = "Croatia"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Name = "Hungary"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Name = "Romania"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Name = "Seychelles"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Name = "Bulgaria"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Name = "Montenegro"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Name = "Panama"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Name = "Serbia"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Name = "Georgia"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Name = "Trinidad And Tobago"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Name = "Peru"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Name = "China"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Name = "Bahrain"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Name = "Argentina"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Name = "Oman"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Name = "Armenia"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Name = "Kuwait"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Name = "Indonesia"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Name = "Jamaica"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Name = "Albania"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Name = "Thailand"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Name = "Mexico"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Name = "Kazakhstan"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Name = "Brazil"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Name = "Bosnia And Herzegovina"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Name = "Saudi Arabia"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Name = "Colombia"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Name = "Sri Lanka"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Name = "Botswana"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Name = "Cape Verde"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Name = "Dominican Republic"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Name = "Paraguay"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Name = "Ecuador"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Name = "Moldova"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Name = "Suriname"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Name = "South Africa"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Name = "Philippines"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Name = "Vietnam"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Name = "Jordan"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Name = "Namibia"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Name = "Guyana"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Name = "Turkey"
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Name = "Azerbaijan"
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Name = "Belize"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Name = "Tunisia"
                         });
                 });
 
@@ -257,6 +698,582 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CountryTranslates");
+                });
+
+            modelBuilder.Entity("Core.Entities.CountryEntity.PhoneCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("PhoneCodes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "380",
+                            CountryId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "45",
+                            CountryId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "47",
+                            CountryId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "41",
+                            CountryId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "46",
+                            CountryId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "358",
+                            CountryId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "31",
+                            CountryId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "64",
+                            CountryId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "49",
+                            CountryId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "352",
+                            CountryId = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "354",
+                            CountryId = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "44",
+                            CountryId = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "353",
+                            CountryId = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "43",
+                            CountryId = 14
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "1",
+                            CountryId = 15
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "852",
+                            CountryId = 16
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "65",
+                            CountryId = 17
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "61",
+                            CountryId = 18
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "1",
+                            CountryId = 19
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "81",
+                            CountryId = 20
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "356",
+                            CountryId = 21
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "372",
+                            CountryId = 22
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "32",
+                            CountryId = 23
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Code = "33",
+                            CountryId = 24
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Code = "886",
+                            CountryId = 25
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Code = "34",
+                            CountryId = 26
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Code = "351",
+                            CountryId = 27
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Code = "386",
+                            CountryId = 28
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Code = "420",
+                            CountryId = 29
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Code = "82",
+                            CountryId = 30
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Code = "39",
+                            CountryId = 31
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Code = "972",
+                            CountryId = 32
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Code = "421",
+                            CountryId = 33
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Code = "370",
+                            CountryId = 34
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Code = "357",
+                            CountryId = 35
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Code = "371",
+                            CountryId = 36
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Code = "48",
+                            CountryId = 37
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Code = "56",
+                            CountryId = 38
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Code = "506",
+                            CountryId = 39
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Code = "598",
+                            CountryId = 40
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Code = "971",
+                            CountryId = 41
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Code = "60",
+                            CountryId = 42
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Code = "30",
+                            CountryId = 43
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Code = "974",
+                            CountryId = 44
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Code = "230",
+                            CountryId = 45
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Code = "385",
+                            CountryId = 46
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Code = "36",
+                            CountryId = 47
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Code = "40",
+                            CountryId = 48
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Code = "248",
+                            CountryId = 49
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Code = "359",
+                            CountryId = 50
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Code = "382",
+                            CountryId = 51
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Code = "507",
+                            CountryId = 52
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Code = "381",
+                            CountryId = 53
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Code = "995",
+                            CountryId = 54
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Code = "1-868",
+                            CountryId = 55
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Code = "51",
+                            CountryId = 56
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Code = "86",
+                            CountryId = 57
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Code = "973",
+                            CountryId = 58
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Code = "54",
+                            CountryId = 59
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Code = "968",
+                            CountryId = 60
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Code = "374",
+                            CountryId = 61
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Code = "965",
+                            CountryId = 62
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Code = "62",
+                            CountryId = 63
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Code = "1-876",
+                            CountryId = 64
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Code = "355",
+                            CountryId = 65
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Code = "66",
+                            CountryId = 66
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Code = "52",
+                            CountryId = 67
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Code = "7",
+                            CountryId = 68
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Code = "55",
+                            CountryId = 69
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Code = "387",
+                            CountryId = 70
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Code = "966",
+                            CountryId = 71
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Code = "57",
+                            CountryId = 72
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Code = "94",
+                            CountryId = 73
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Code = "267",
+                            CountryId = 74
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Code = "238",
+                            CountryId = 75
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Code = "1-809",
+                            CountryId = 76
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Code = "1-829",
+                            CountryId = 76
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Code = "1-849",
+                            CountryId = 76
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Code = "595",
+                            CountryId = 77
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Code = "593",
+                            CountryId = 78
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Code = "373",
+                            CountryId = 79
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Code = "597",
+                            CountryId = 80
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Code = "27",
+                            CountryId = 81
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Code = "63",
+                            CountryId = 82
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Code = "84",
+                            CountryId = 83
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Code = "962",
+                            CountryId = 84
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Code = "264",
+                            CountryId = 85
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Code = "592",
+                            CountryId = 86
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Code = "90",
+                            CountryId = 87
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Code = "994",
+                            CountryId = 88
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Code = "501",
+                            CountryId = 89
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Code = "217",
+                            CountryId = 90
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.CurrencyEntity.Currency", b =>
@@ -533,6 +1550,20 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6d13646d-700f-444c-8fbf-aa540f08700d"),
+                            Name = "English",
+                            SmallName = "EN"
+                        },
+                        new
+                        {
+                            Id = new Guid("0ea31b65-13ab-474d-bd52-3c79e8fea7ce"),
+                            Name = "Ukrainian",
+                            SmallName = "UA"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.OtherEntities.DateFormat", b =>
@@ -704,7 +1735,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("ServiceSubCategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("URL")
+                    b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -772,6 +1803,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BillingCycleId");
+
+                    b.HasIndex("RemindMeId");
 
                     b.HasIndex("ServiceId");
 
@@ -966,21 +1999,21 @@ namespace Infrastructure.Migrations
                         {
                             Id = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dcbd54f0-322f-4e35-b372-33fa8a4b7d87",
+                            ConcurrencyStamp = "ef873fef-9a5b-4160-86f1-11e3d13e5bad",
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
                             Gender = 0,
-                            LastActivityDay = new DateTime(2022, 9, 16, 20, 47, 0, 474, DateTimeKind.Local).AddTicks(7441),
+                            LastActivityDay = new DateTime(2022, 10, 12, 12, 17, 56, 830, DateTimeKind.Local).AddTicks(6952),
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "MASTERADMIN",
                             Notification = true,
-                            PasswordHash = "AQAAAAEAACcQAAAAEM11q9w9Aa1AVNTwlnpvVP7N/WenBjnzTrM/FC13QloXKd3e2MuPBdXCT5OjR574Yw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPxwqK1ig9dBBFPd24bUSbv8DOaEuEHR1daDxElczA17uYpHjd+4NMj1qCq0mKKPsQ==",
                             PayExperience = 0,
                             PhoneNumber = "XXXXXXXXXXXXX",
                             PhoneNumberConfirmed = true,
                             PremiumMembership = 0,
-                            RegistrationDay = new DateTime(2022, 9, 16, 20, 47, 0, 474, DateTimeKind.Local).AddTicks(7393),
+                            RegistrationDay = new DateTime(2022, 10, 12, 12, 17, 56, 830, DateTimeKind.Local).AddTicks(6923),
                             RoundNumbersToIntegers = false,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
                             TwoFactorEnabled = false,
@@ -1045,14 +2078,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = "2301D884-221A-4E7D-B509-0113DCC043E1",
-                            ConcurrencyStamp = "2cd5eb1e-de32-4c92-8227-6c82bb1a2290",
+                            ConcurrencyStamp = "37321187-90bc-468a-94f2-76f535059764",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3",
-                            ConcurrencyStamp = "87cb69c2-8fc6-4d46-8830-841801afe103",
+                            ConcurrencyStamp = "3cda8d8b-5571-4d9a-ab3c-14c334e8424a",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -1191,6 +2224,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("UserBank");
                 });
 
+            modelBuilder.Entity("Core.Entities.CountryEntity.PhoneCode", b =>
+                {
+                    b.HasOne("Core.Entities.CountryEntity.Country", "Country")
+                        .WithMany("PhoneCodes")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Core.Entities.UserEntity.User", "User")
@@ -1230,6 +2274,10 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.OtherEntities.RemindMe", "RemindMe")
+                        .WithMany()
+                        .HasForeignKey("RemindMeId");
+
                     b.HasOne("Core.Entities.SubscriptionEntity.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId");
@@ -1239,6 +2287,8 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("BillingCycle");
+
+                    b.Navigation("RemindMe");
 
                     b.Navigation("Service");
 
@@ -1383,6 +2433,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.CardEntity.Card", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Core.Entities.CountryEntity.Country", b =>
+                {
+                    b.Navigation("PhoneCodes");
                 });
 
             modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>

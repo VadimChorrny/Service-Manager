@@ -7,7 +7,7 @@ namespace Core.Entities.CurrencyEntity
     {
         [Key]
         public int Id { get; set; }
-        public string? Flag { get; set; }
+        public string Flag { get; set; }
         [Required]
         //[AlternateKey]
         //[Index(IsUnique = true)]

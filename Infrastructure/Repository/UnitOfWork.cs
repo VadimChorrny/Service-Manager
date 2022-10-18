@@ -1,7 +1,10 @@
 ﻿using Core.Entities.BankEntity;
 using Core.Entities.BillingCycleEntity;
+using Core.Entities.CardEntity;
 using Core.Entities.CategoryEntity;
+using Core.Entities.CountryEntity;
 using Core.Entities.CurrencyEntity;
+using Core.Entities.LanguageEntity;
 using Core.Entities.SubscriptionEntity;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
@@ -26,8 +29,20 @@ namespace Infrastructure.Repository
         private IRepository<UserBank> _userBankRepository;
         private IRepository<Currency> _currencyRepository;
         private IRepository<BillingCycle> _billingCycleRepository;
+        private IRepository<Language> _languageRepository;
+        private IRepository<Country> _countryRepository;
+        private IRepository<Card> _cardRepository;
         public UnitOfWork(ApplicationContext context) { _context = context; } // CTOR
         // GET FOR REPOSITORY
+        public IRepository<Card> CardRepository
+        {
+            get
+            {
+                if (_cardRepository == null)
+                    _cardRepository = new Repository<Card>(_context);
+                return _cardRepository;
+            }
+        }
         public IRepository<BillingCycle> BillingCycleRepository
         {
             get
@@ -35,6 +50,24 @@ namespace Infrastructure.Repository
                 if (_billingCycleRepository == null)
                     _billingCycleRepository = new Repository<BillingCycle>(_context);
                 return _billingCycleRepository;
+            }
+        }
+        public IRepository<Country> CountryRepository
+        {
+            get
+            {
+                if (_countryRepository == null)
+                    _countryRepository = new Repository<Country>(_context);
+                return _countryRepository;
+            }
+        }
+        public IRepository<Language> LanguageRepository
+        {
+            get
+            {
+                if (_languageRepository == null)
+                    _languageRepository = new Repository<Language>(_context);
+                return _languageRepository;
             }
         }
         public IRepository<Bank> BankRepository
@@ -130,14 +163,14 @@ namespace Infrastructure.Repository
         // REALISE Save();
         public Task<int> SaveChangesAsync() => _context.SaveChangesAsync();
         // DISPOSING
-        private bool disposed = false;
+        private bool _disposed = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                     _context.Dispose();
-                this.disposed = true;
+                this._disposed = true;
             }
         }
         public void Dispose()

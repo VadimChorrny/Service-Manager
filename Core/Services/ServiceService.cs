@@ -23,11 +23,11 @@ namespace Core.Services
         {
             try
             {
-                foreach (var serviceItem in await _unitOfWork.ServiceRepository.Get())
+                foreach (var serviceItem in await _unitOfWork.ServiceRepository.GetAllAsync())
                 {
                     if (!IsContainsInExcel(path, serviceItem))
                     {
-                        var subSearch = (await _unitOfWork.SubscriptionsSearchRepository.Get(el => el.Service.Name == serviceItem.Name))?.FirstOrDefault();
+                        var subSearch = (await _unitOfWork.SubscriptionsSearchRepository.GetFirstOrDefaultAsync(el => el.Service.Name == serviceItem.Name, disableTracking: false));
                         if (subSearch != null)
                         {
                             _unitOfWork.SubscriptionsSearchRepository.Delete(subSearch);
@@ -57,8 +57,7 @@ namespace Core.Services
                             string categoryName = mainSheet.Cells[i, 4].Value as string;
                             string subCategoryName = mainSheet.Cells[i, 5].Value as string;
                             string searchField = mainSheet.Cells[i, 6].Value as string;
-                            Service service = (await _unitOfWork.ServiceRepository.Get(el => el.Name == name))
-                                ?.FirstOrDefault();
+                            Service service = (await _unitOfWork.ServiceRepository.GetFirstOrDefaultAsync(el => el.Name == name, disableTracking: false));
                             if (service == null)
                             {
                                 service = new Service { Name = name };
@@ -68,11 +67,11 @@ namespace Core.Services
                             if (mainSheet.Cells[i, 6].Value != null)
                             {
                                 string url = mainSheet.Cells[i, 2].Value as string;
-                                service.URL = url;
+                                service.Url = url;
                             }
                             ServiceCategory serviceCategory =
-                                (await _unitOfWork.ServiceCategoryRepository.Get(el => el.Name == categoryName))
-                                ?.FirstOrDefault();
+                                (await _unitOfWork.ServiceCategoryRepository.GetFirstOrDefaultAsync(el => el.Name == categoryName, disableTracking: false))
+                                ;
                             if (serviceCategory == null)
                             {
                                 serviceCategory = new ServiceCategory { Name = categoryName };
@@ -82,8 +81,8 @@ namespace Core.Services
 
                             service.ServiceCategory = serviceCategory;
                             ServiceSubCategory serviceSubCategory =
-                                (await _unitOfWork.ServiceSubCategoryRepository.Get(el => el.Name == subCategoryName))
-                                ?.FirstOrDefault();
+                                (await _unitOfWork.ServiceSubCategoryRepository.GetFirstOrDefaultAsync(el => el.Name == subCategoryName, disableTracking: false))
+                                ;
                             if (serviceSubCategory == null)
                             {
                                 serviceSubCategory = new ServiceSubCategory { Name = subCategoryName };
@@ -94,8 +93,8 @@ namespace Core.Services
                             service.ServiceSubCategory = serviceSubCategory;
                             service.Logo ??= logo;
                             var subscriptionsSearch =
-                                (await _unitOfWork.SubscriptionsSearchRepository.Get(el => el.Service.Name == name))
-                                ?.FirstOrDefault();
+                                (await _unitOfWork.SubscriptionsSearchRepository.GetFirstOrDefaultAsync(el => el.Service.Name == name, disableTracking: false))
+                                ;
                             if (subscriptionsSearch == null)
                             {
                                 subscriptionsSearch = new SubscriptionsSearch { Service = service };

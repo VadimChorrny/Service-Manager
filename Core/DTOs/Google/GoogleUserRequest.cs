@@ -5,7 +5,7 @@ namespace Core.DTOs.Google
 {
     public class GoogleUserRequest
     {
-        public const string PROVIDER = "google";
+        public const string Provider = "google";
         [JsonProperty("idToken")]
         [Required]
         public string IdToken { get; set; }

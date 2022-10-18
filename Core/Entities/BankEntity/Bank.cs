@@ -16,7 +16,7 @@ namespace Core.Entities.BankEntity
         public string? Name { get; set; }
         public string? Logo { get; set; }
         public string? Links { get; set; }
-        public string? LinksAPI { get; set; }
+        public string? LinksApi { get; set; }
         //public int? CounterUser { get; set; }
         public string? InstructionTitle { get; set; }
         public string? InstructionDescription { get; set; }

@@ -1,7 +1,10 @@
 ﻿using Core.Entities.BankEntity;
 using Core.Entities.BillingCycleEntity;
+using Core.Entities.CardEntity;
 using Core.Entities.CategoryEntity;
+using Core.Entities.CountryEntity;
 using Core.Entities.CurrencyEntity;
+using Core.Entities.LanguageEntity;
 using Core.Entities.SubscriptionEntity;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
@@ -21,6 +24,9 @@ namespace Core.Interfaces
         IRepository<UserBank> UserBankRepository { get; }
         IRepository<Currency> CurrencyRepository { get; }
         IRepository<BillingCycle> BillingCycleRepository { get; }
+        IRepository<Language> LanguageRepository { get; }
+        IRepository<Country> CountryRepository { get; }
+        IRepository<Card> CardRepository { get; }
         Task<int> SaveChangesAsync();
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using AutoMapper;
 using Mailjet.Client.Resources;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 using User = Core.Entities.UserEntity.User;
@@ -21,26 +22,37 @@ namespace Core.Services
 {
     public class AccountService : IAccountService
     {
-        protected IOptions<JwtOptions> _jwtOptions;
-        protected IJwtService _jwtService;
+        protected IOptions<JwtOptions> JwtOptions;
+        protected IJwtService JwtService;
         protected UserManager<User> _userManager;
         private IRepository<RefreshToken> _refreshTokenRepository;
-        protected IConfiguration _configuration;
+        protected IConfiguration Configuration;
         private readonly IEmailService _emailService;
-
+        private readonly IMapper _mapper;
         public AccountService(
             IOptions<JwtOptions> jwtOptions,
             IJwtService jwtService,
             UserManager<User> userManager,
             IRepository<RefreshToken> refreshTokenRepository,
-            IConfiguration configuration, IEmailService emailService)
+            IConfiguration configuration, IEmailService emailService, IMapper mapper)
         {
-            _jwtOptions = jwtOptions;
-            _jwtService = jwtService;
+            JwtOptions = jwtOptions;
+            JwtService = jwtService;
             _userManager = userManager;
             _refreshTokenRepository = refreshTokenRepository;
-            _configuration = configuration;
+            Configuration = configuration;
             _emailService = emailService;
+            _mapper = mapper;
+        }
+
+        public async Task<UserDTO> GetUserProfile(string userName)
+        {
+            var user = await _userManager.FindByIdAsync(userName);
+            if (user == null)
+            {
+                throw new HttpException("User isn`t exists", HttpStatusCode.BadRequest);
+            }
+            return _mapper.Map<UserDTO>(user);
         }
 
         public async Task<AuthenticationDTO> LoginAsync(string email, string password)
@@ -57,19 +69,19 @@ namespace Core.Services
             return await GenerateTokens(user);
         }
 
-        public Task ChangePassword(ChangePasswordDTO changePasswordDTO)
+        public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(changePasswordDTO.UserId);
+            await _userManager.ResetPasswordAsync(user, changePasswordDTO.Token, changePasswordDTO.Password);
         }
-
         public async Task<User> AuthenticateGoogleUserAsync(GoogleUserRequest request)
         {
             GoogleJsonWebSignature.Payload payload = await ValidateAsync(request.IdToken, new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new[] { _configuration["Google:ClientId"] }
+                Audience = new[] { Configuration["Google:ClientId"] }
             });
 
-            return await GetOrCreateExternalLoginUser(GoogleUserRequest.PROVIDER, payload.Subject, payload.Email, payload.GivenName, payload.FamilyName);
+            return await GetOrCreateExternalLoginUser(GoogleUserRequest.Provider, payload.Subject, payload.Email, payload.GivenName, payload.FamilyName);
         }
         private async Task<User> GetOrCreateExternalLoginUser(string provider, string key, string email, string firstName, string lastName)
         {
@@ -97,14 +109,13 @@ namespace Core.Services
             return null;
 
         }
-
         public async Task<AuthenticationDTO> GenerateTokens(User user)
         {
-            var claims = _jwtService.SetClaims(user);
+            var claims = JwtService.SetClaims(user);
             //var accessToken = _jwtService.CreateToken(claims);
             var refreshToken = await CreateRefreshToken(user.Id);
 
-            var token = _jwtService.CreateToken(claims);
+            var token = JwtService.CreateToken(claims);
 
             var tokens = new AuthenticationDTO()
             {
@@ -114,7 +125,6 @@ namespace Core.Services
 
             return tokens;
         }
-
         public async Task RegisterAsync(RegisterUserDTO data, string callbackUrl)
         {
             if (data == null)
@@ -146,7 +156,7 @@ namespace Core.Services
 
         private async Task<RefreshToken> CreateRefreshToken(string authorId)
         {
-            var refreshToken = _jwtService.CreateRefreshToken();
+            var refreshToken = JwtService.CreateRefreshToken();
             var refreshTokenEntity = new RefreshToken()
             {
                 Token = refreshToken,
@@ -159,7 +169,7 @@ namespace Core.Services
 
         public async Task LogoutAsync(UserLogoutDTO userTokensDTO)
         {
-            var refreshToken = (await _refreshTokenRepository.Get(r => r.Token == userTokensDTO.RefreshToken)).FirstOrDefault();
+            var refreshToken = (await _refreshTokenRepository.GetFirstOrDefaultAsync(r => r.Token == userTokensDTO.RefreshToken));
             if (refreshToken == null)
             {
                 throw new HttpException("Refresh token is null", HttpStatusCode.Forbidden);
@@ -194,17 +204,17 @@ namespace Core.Services
 
         public async Task<AuthenticationDTO> RefreshTokenAsync(AuthenticationDTO authorizationDTO)
         {
-            var refreshToken = await _refreshTokenRepository.Get((el) => el.Token == authorizationDTO.RefreshToken);
+            var refreshToken = await _refreshTokenRepository.GetFirstOrDefaultAsync((el) => el.Token == authorizationDTO.RefreshToken);
 
-            var claims = _jwtService.GetClaimsFromExpiredToken(authorizationDTO.Token);
-            var newAccessToken = _jwtService.CreateToken(claims);
-            var newRefreshToken = _jwtService.CreateRefreshToken();
+            var claims = JwtService.GetClaimsFromExpiredToken(authorizationDTO.Token);
+            var newAccessToken = JwtService.CreateToken(claims);
+            var newRefreshToken = JwtService.CreateRefreshToken();
 
-            var refreshTokenFirst = refreshToken.First();
-            refreshTokenFirst.Token = newRefreshToken;
+            //var refreshTokenFirst = refreshToken.First();
+            refreshToken.Token = newRefreshToken;
 
-            _refreshTokenRepository.Update(refreshTokenFirst);
-
+            _refreshTokenRepository.Update(refreshToken);
+            await _refreshTokenRepository.SaveChangesAsync();
             var tokens = new AuthenticationDTO()
             {
                 Token = newAccessToken,

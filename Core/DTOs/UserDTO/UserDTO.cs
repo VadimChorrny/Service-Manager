@@ -10,16 +10,14 @@ namespace Core.DTOs.UserDTO
     public class UserDTO
     {
         public string Name { get; set; }
-        public string Surname { get; set; }
-        public int Age { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public DateTime RegistrationDay { get; set; }
         public DateTime LastActivityDay { get; set; }
-        public int LangId { get; set; }
+        public int? LangId { get; set; }
         public int ConnectedBanks { get; set; }
-        public int CreateSubscriptions { get; set; }
         public bool Notification { get; set; }
         public bool RoundNumbersToIntegers { get; set; }
-        public int? BankId { get; set; }
         public Gender Gender { get; set; }
         public int? StatusId { get; set; }
         public Payment Payments { get; set; }

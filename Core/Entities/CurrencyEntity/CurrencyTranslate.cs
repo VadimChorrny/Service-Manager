@@ -6,7 +6,7 @@ namespace Core.Entities.CurrencyEntity
     {
         [Key]
         public Guid Id { get; set; }
-        public string? CurrencyTranslateName { get; set; }
+        public string CurrencyTranslateName { get; set; }
         public Guid? LangId { get; set; }
     }
 }

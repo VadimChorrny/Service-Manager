@@ -1,4 +1,5 @@
 ﻿using Core.Entities.BillingCycleEntity;
+using Core.Entities.OtherEntities;
 using Core.Entities.TransactionEntity;
 using Core.Entities.UserEntity;
 
@@ -10,10 +11,12 @@ namespace Core.Entities.SubscriptionEntity
         //public int SubscriptionId { get; set; }
         public Guid? ServiceId { get; set; }
         public string Name { get; set; }
-        public string? Notes { get; set; }
+        public string Notes { get; set; }
         public Guid? StatusId { get; set; }
+        public float? Tariff { get; set; }
         public int BillingCycleId { get; set; }
         public Guid? RemindMeId { get; set; }
+        public virtual RemindMe RemindMe { get; set; }
         public Guid? LabelId { get; set; }
         public string UserId { get; set; }
         public bool IsCustom { get; set; } // If user add custom subscription

@@ -23,6 +23,22 @@ namespace API.Controllers
             _logger = logger;
             _emailService = emailService;
         } // I love u
+        [Authorize]
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            try
+            {
+                return Ok(await _accountService.GetUserProfile(User.Claims.FirstOrDefault().Value));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new
+                {
+                    invalid = ex.Message
+                });
+            }
+        }
 
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromBody] RegisterUserDTO data)
@@ -61,7 +77,7 @@ namespace API.Controllers
             await _emailService.ConfirmEmailAsync(request);
             return Ok();
         }
-
+        #region Password
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
         {
@@ -69,6 +85,13 @@ namespace API.Controllers
             await _emailService.SendResetPasswordEmailAsync(resetPasswordDTO, callbackUrl);
             return Ok();
         }
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO model)
+        {
+            await _accountService.ChangePassword(model);
+            return Ok();
+        }
+        #endregion
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromBody] UserLogoutDTO userLogoutDTO)
         {

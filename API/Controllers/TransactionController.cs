@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using Core.Interfaces.CustomServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -15,6 +16,13 @@ namespace API.Controllers
             _transactionService = transactionService;
         }
 
+        [Authorize]
+        [HttpGet("transactions-from-privat")]
+        //Warning! Date in Swagger in format MM.dd.YYYY
+        public async Task<IActionResult> RegisterTransactionsFromPrivat(DateTime from, DateTime to)
+        {
+            return Ok(await _transactionService.RegisterTransactionsPrivat(User.Claims.FirstOrDefault().Value, from, to));
+        }
         [HttpGet("getAllTransactionsBySubscription")]
         public async Task<IActionResult> GetAllTransactionsBySubscription(string id)
         {

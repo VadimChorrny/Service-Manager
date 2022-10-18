@@ -6,7 +6,7 @@ namespace Core.Entities.LanguageEntity
     {
         [Key]
         public Guid Id { get; set; }
-        public string? Name { get; set; }
-        public string? SmallName { get; set; }
+        public string Name { get; set; }
+        public string SmallName { get; set; }
     }
 }

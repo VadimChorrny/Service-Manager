@@ -11,8 +11,8 @@ namespace Infrastructure.Configuration
 {
     public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
-        private const string adminId = "2301D884-221A-4E7D-B509-0113DCC043E1";
-        private const string userId = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3";
+        private const string AdminId = "2301D884-221A-4E7D-B509-0113DCC043E1";
+        private const string UserId = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3";
 
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
@@ -20,13 +20,13 @@ namespace Infrastructure.Configuration
             builder.HasData(
                 new IdentityRole
                 {
-                    Id = adminId,
+                    Id = AdminId,
                     Name = "Administrator",
                     NormalizedName = "ADMINISTRATOR"
                 },
                 new IdentityRole
                 {
-                    Id = userId,
+                    Id = UserId,
                     Name = "User",
                     NormalizedName = "USER"
                 });

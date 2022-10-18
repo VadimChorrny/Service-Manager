@@ -12,12 +12,12 @@ namespace Infrastructure.Configuration
 {
     public class AdminConfiguration : IEntityTypeConfiguration<User>
     {
-        private const string adminId = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7";
+        private const string AdminId = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7";
         public void Configure(EntityTypeBuilder<User> builder)
         {
             var admin = new User
             {
-                Id = adminId,
+                Id = AdminId,
                 UserName = "masteradmin",
                 NormalizedUserName = "MASTERADMIN",
                 Email = "Admin@Admin.com",

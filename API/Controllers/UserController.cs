@@ -10,12 +10,12 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService _userService { get; set; }
+        private IUserService UserService { get; set; }
         private readonly ILogger<UserController> _logger;
         public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _logger = logger;
-            _userService = userService;
+            UserService = userService;
         }
 
         [HttpPost]
@@ -23,7 +23,7 @@ namespace API.Controllers
         public async Task<ActionResult> Post([FromForm] UserDTO user)
         {
             if (!ModelState.IsValid) return BadRequest("Model is invalid");
-            await _userService.Create(user);
+            await UserService.Create(user);
             _logger.LogInformation("User was successfully created!");
             return Ok(); // also can return all table
         }
@@ -32,7 +32,7 @@ namespace API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Put([FromBody] UserDTO user)
         {
-            await _userService.Edit(user);
+            await UserService.Edit(user);
             _logger.LogInformation("User was successfully updated!");
             return Ok();
         }
@@ -41,7 +41,7 @@ namespace API.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Delete(string id)
         {
-            await _userService.Delete(id);
+            await UserService.Delete(id);
             _logger.LogInformation($"Successfully delete user with id {id}");
             return Ok();
         }
@@ -51,14 +51,14 @@ namespace API.Controllers
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
         {
-            return Ok(await _userService.Get());
+            return Ok(await UserService.Get());
         }
 
         [HttpGet("{id:int}")] // maybe need change to string :)
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<UserDTO>> Get(string id)
         {
-            var author = await _userService.GetUserById(id);
+            var author = await UserService.GetUserById(id);
             _logger.LogInformation($"Got a author with id {id}");
             return author;
         }

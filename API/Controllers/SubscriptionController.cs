@@ -17,26 +17,26 @@ namespace API.Controllers
             _subscriptionService = subscriptionService;
         }
 
-        [HttpGet("getMonobankAccounts")]
+        [HttpGet("get-monobank-accounts")]
         public async Task<IActionResult> GetMonobankAccounts(string token)
         {
             return Ok(await _subscriptionService.GetMonobankAccounts(token));
         }
 
-        [HttpPost("registerTransactionFromAccountsMonobank")]
+        [HttpPost("register-transaction-from-accounts-monobank")]
         public async Task<IActionResult> RegisterTransactionsFromAccountsMonobank(IEnumerable<AccountMonobankDTO> monobankAccounts, string token, string userId, DateTime? from)
         {
             await _subscriptionService.RegisterSubscriptionsFromAccountsMonobank(monobankAccounts, token, from, userId);
             return Ok();
         }
 
-        [HttpGet("getSubscriptions")]
+        [HttpGet("calculate-subscriptions")]
         public async Task<IActionResult> GetSubscriptions(string userId)
         {
-            return Ok(await _subscriptionService.GetSubscriptions(userId));
+            return Ok(await _subscriptionService.CalculateSubscriptions(userId));
         }
 
-        [HttpGet("getSubscriptionsByUserId")]
+        [HttpGet("get-subscriptions-by-user-id")]
         public async Task<IActionResult> GetSubscriptionsByUserId(string userId)
         {
             return Ok(await _subscriptionService.GetSubscriptionsByUser(userId));

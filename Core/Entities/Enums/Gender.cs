@@ -5,10 +5,10 @@ namespace Core.Entities.Enums
     public enum Gender
     {
         [Description("Male")]
-        MALE,
+        Male,
         [Description("Female")]
-        FEMALE,
+        Female,
         [Description("Other")]
-        OTHER
+        Other
     }
 }

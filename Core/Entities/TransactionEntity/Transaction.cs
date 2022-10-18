@@ -5,6 +5,7 @@ using Core.Entities.SubscriptionEntity;
 
 namespace Core.Entities.TransactionEntity
 {
+    //Avg(t1, t2)
     public class Transaction
     {
         [Key]

@@ -14,13 +14,13 @@ namespace Core.Services
 {
     public class JwtService : IJwtService
     {
-        private readonly IOptions<JwtOptions> jwtOptions;
-        private readonly UserManager<User> userManager;
+        private readonly IOptions<JwtOptions> _jwtOptions;
+        private readonly UserManager<User> _userManager;
 
         public JwtService(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager)
         {
-            this.jwtOptions = jwtOptions;
-            this.userManager = userManager;
+            this._jwtOptions = jwtOptions;
+            this._userManager = userManager;
         }
 
         //public string CreateRefreshToken()
@@ -33,12 +33,12 @@ namespace Core.Services
 
         public string CreateToken(IEnumerable<Claim> claims)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.Key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Value.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer: jwtOptions.Value.Issuer,
+                issuer: _jwtOptions.Value.Issuer,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(jwtOptions.Value.LifeTime),
+                expires: DateTime.UtcNow.AddHours(_jwtOptions.Value.LifeTime),
                 signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
@@ -51,8 +51,8 @@ namespace Core.Services
                 ValidateAudience = false,
                 ValidateLifetime = false,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtOptions.Value.Issuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Value.Key)),
+                ValidIssuer = _jwtOptions.Value.Issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Value.Key)),
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

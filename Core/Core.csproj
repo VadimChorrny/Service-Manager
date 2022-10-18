@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\SubscriptionTypeEntity\" />
+    <Folder Include="Entities\PhoneCode\" />
     <Folder Include="Resouces\" />
   </ItemGroup>
 

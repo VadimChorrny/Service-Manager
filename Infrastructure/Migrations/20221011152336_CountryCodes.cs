@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class CountryCodes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -217,7 +217,7 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Links = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinksAPI = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinksApi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InstructionTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InstructionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryId = table.Column<int>(type: "int", nullable: true)
@@ -230,6 +230,26 @@ namespace Infrastructure.Migrations
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhoneCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhoneCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PhoneCodes_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -271,6 +291,8 @@ namespace Infrastructure.Migrations
                     CountryId = table.Column<int>(type: "int", nullable: true),
                     CurrencyId = table.Column<int>(type: "int", nullable: true),
                     PayExperience = table.Column<int>(type: "int", nullable: false),
+                    ConfirmationEmailToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConfirmationEmailTokenExpirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -317,7 +339,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ServiceCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -592,7 +614,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Transactions_Subscriptions_SubscriptionId",
                         column: x => x.SubscriptionId,
                         principalTable: "Subscriptions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.InsertData(
@@ -600,14 +623,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "096feb0a-6486-4817-b46a-f5a336752124", "Administrator", "ADMINISTRATOR" },
-                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "871c121b-be74-4a35-af16-5945737026fd", "User", "USER" }
+                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "6c1d1c47-e74b-4efa-8744-00987f400048", "Administrator", "ADMINISTRATOR" },
+                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "103eea27-1705-409a-ac7a-4250b457fad5", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Age", "ConcurrencyStamp", "CountryId", "CurrencyId", "Email", "EmailConfirmed", "Gender", "LangId", "LastActivityDay", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Notification", "PasswordHash", "PayExperience", "PhoneNumber", "PhoneNumberConfirmed", "PremiumMembership", "RegistrationDay", "RoundNumbersToIntegers", "SecurityStamp", "StatusId", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "cc07d81b-39a0-4970-9a95-9bf5f4472709", null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8547), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEFAuE5OFt4/jQmZ0nKMBu/8l8ghbCPKjJR7dzVdKQOHoBUifMct6it14nTrtGRdd6Q==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 9, 11, 14, 56, 50, 95, DateTimeKind.Local).AddTicks(8513), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
+                columns: new[] { "Id", "AccessFailedCount", "Age", "ConcurrencyStamp", "ConfirmationEmailToken", "ConfirmationEmailTokenExpirationDate", "CountryId", "CurrencyId", "Email", "EmailConfirmed", "Gender", "LangId", "LastActivityDay", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Notification", "PasswordHash", "PayExperience", "PhoneNumber", "PhoneNumberConfirmed", "PremiumMembership", "RegistrationDay", "RoundNumbersToIntegers", "SecurityStamp", "StatusId", "Surname", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "feb44219-a0bd-458f-9752-ab0fd9c372e7", null, null, null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 10, 11, 18, 23, 36, 499, DateTimeKind.Local).AddTicks(9626), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEHf9+13yBNK9GlOoHBxHiDi1uq5SY94u0CWURINqCbzRPYlbUHuD54xLOCCohwQYww==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 10, 11, 18, 23, 36, 499, DateTimeKind.Local).AddTicks(9595), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
 
             migrationBuilder.InsertData(
                 table: "BillingCycles",
@@ -628,8 +651,109 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, null, "Ukraine" },
-                    { 2, null, "USA" },
-                    { 3, null, "Poland" }
+                    { 2, null, "Denmark" },
+                    { 3, null, "Norway" },
+                    { 4, null, "Switzerland" },
+                    { 5, null, "Sweden" },
+                    { 6, null, "Finland" },
+                    { 7, null, "Netherlands" },
+                    { 8, null, "New Zealand" },
+                    { 9, null, "Germany" },
+                    { 10, null, "Luxembourg" },
+                    { 11, null, "Iceland" },
+                    { 12, null, "United Kingdom" },
+                    { 13, null, "Ireland" },
+                    { 14, null, "Austria" },
+                    { 15, null, "Canada" },
+                    { 16, null, "Hong Kong" },
+                    { 17, null, "Singapore" },
+                    { 18, null, "Australia" },
+                    { 19, null, "United States" },
+                    { 20, null, "Japan" },
+                    { 21, null, "Malta" },
+                    { 22, null, "Estonia" },
+                    { 23, null, "Belgium" },
+                    { 24, null, "France" },
+                    { 25, null, "Taiwan" },
+                    { 26, null, "Spain" },
+                    { 27, null, "Portugal" },
+                    { 28, null, "Slovenia" },
+                    { 29, null, "Czech Republic" },
+                    { 30, null, "South Korea" },
+                    { 31, null, "Italy" },
+                    { 32, null, "Israel" },
+                    { 33, null, "Slovakia" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "Id", "Flag", "Name" },
+                values: new object[,]
+                {
+                    { 34, null, "Lithuania" },
+                    { 35, null, "Cyprus" },
+                    { 36, null, "Latvia" },
+                    { 37, null, "Poland" },
+                    { 38, null, "Chile" },
+                    { 39, null, "Costa Rica" },
+                    { 40, null, "Uruguay" },
+                    { 41, null, "United Arab Emirates" },
+                    { 42, null, "Malaysia" },
+                    { 43, null, "Greece" },
+                    { 44, null, "Qatar" },
+                    { 45, null, "Mauritius" },
+                    { 46, null, "Croatia" },
+                    { 47, null, "Hungary" },
+                    { 48, null, "Romania" },
+                    { 49, null, "Seychelles" },
+                    { 50, null, "Bulgaria" },
+                    { 51, null, "Montenegro" },
+                    { 52, null, "Panama" },
+                    { 53, null, "Serbia" },
+                    { 54, null, "Georgia" },
+                    { 55, null, "Trinidad And Tobago" },
+                    { 56, null, "Peru" },
+                    { 57, null, "China" },
+                    { 58, null, "Bahrain" },
+                    { 59, null, "Argentina" },
+                    { 60, null, "Oman" },
+                    { 61, null, "Armenia" },
+                    { 62, null, "Kuwait" },
+                    { 63, null, "Indonesia" },
+                    { 64, null, "Jamaica" },
+                    { 65, null, "Albania" },
+                    { 66, null, "Thailand" },
+                    { 67, null, "Mexico" },
+                    { 68, null, "Kazakhstan" },
+                    { 69, null, "Brazil" },
+                    { 70, null, "Bosnia And Herzegovina" },
+                    { 71, null, "Saudi Arabia" },
+                    { 72, null, "Colombia" },
+                    { 73, null, "Sri Lanka" },
+                    { 74, null, "Botswana" },
+                    { 75, null, "Cape Verde" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "Id", "Flag", "Name" },
+                values: new object[,]
+                {
+                    { 76, null, "Dominican Republic" },
+                    { 77, null, "Paraguay" },
+                    { 78, null, "Ecuador" },
+                    { 79, null, "Moldova" },
+                    { 80, null, "Suriname" },
+                    { 81, null, "South Africa" },
+                    { 82, null, "Philippines" },
+                    { 83, null, "Vietnam" },
+                    { 84, null, "Jordan" },
+                    { 85, null, "Namibia" },
+                    { 86, null, "Guyana" },
+                    { 87, null, "Turkey" },
+                    { 88, null, "Azerbaijan" },
+                    { 89, null, "Belize" },
+                    { 90, null, "Tunisia" }
                 });
 
             migrationBuilder.InsertData(
@@ -663,13 +787,27 @@ namespace Infrastructure.Migrations
                     { 24, "376", null, "₪", "Israeli New Sheqel", "ILS" },
                     { 25, "702", null, "$", "Singapore Dollar", "SGD" },
                     { 26, "949", null, "₺", "Turkish Lira", "TRY" },
-                    { 27, "710", null, "R", "South African Rand", "ZAR" },
-                    { 28, "975", null, "lv.", "Bulgarian Lev", "BGN" }
+                    { 27, "710", null, "R", "South African Rand", "ZAR" }
                 });
 
             migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "CurrencyCode", "Flag", "LettersSign", "Name", "ShortName" },
+                values: new object[] { 28, "975", null, "lv.", "Bulgarian Lev", "BGN" });
+
+            migrationBuilder.InsertData(
+                table: "Languages",
+                columns: new[] { "Id", "Name", "SmallName" },
+                values: new object[] { new Guid("0ea31b65-13ab-474d-bd52-3c79e8fea7ce"), "Ukrainian", "UA" });
+
+            migrationBuilder.InsertData(
+                table: "Languages",
+                columns: new[] { "Id", "Name", "SmallName" },
+                values: new object[] { new Guid("6d13646d-700f-444c-8fbf-aa540f08700d"), "English", "EN" });
+
+            migrationBuilder.InsertData(
                 table: "Banks",
-                columns: new[] { "Id", "CountryId", "InstructionDescription", "InstructionTitle", "Links", "LinksAPI", "Logo", "Name" },
+                columns: new[] { "Id", "CountryId", "InstructionDescription", "InstructionTitle", "Links", "LinksApi", "Logo", "Name" },
                 values: new object[,]
                 {
                     { 1, 1, null, null, "www.monobank.ua", "https://api.monobank.ua/docs/", null, "Monobank" },
@@ -677,6 +815,119 @@ namespace Infrastructure.Migrations
                     { 3, 1, null, null, "https://ukrsibbank.com", "", null, "UKRSIBBANK" },
                     { 4, 2, null, null, "www.chase.com", "https://www.chase.com/digital/data-sharing", null, "Chase" },
                     { 5, 2, null, null, "http://www.wellsfargo.com", "https://developer.wellsfargo.com/", null, "Wells Fargo Bank" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhoneCodes",
+                columns: new[] { "Id", "Code", "CountryId" },
+                values: new object[,]
+                {
+                    { 1, "380", 1 },
+                    { 2, "45", 2 },
+                    { 3, "47", 3 },
+                    { 4, "41", 4 },
+                    { 5, "46", 5 },
+                    { 6, "358", 6 },
+                    { 7, "31", 7 },
+                    { 8, "64", 8 },
+                    { 9, "49", 9 },
+                    { 10, "352", 10 },
+                    { 11, "354", 11 },
+                    { 12, "44", 12 },
+                    { 13, "353", 13 },
+                    { 14, "43", 14 },
+                    { 15, "1", 15 },
+                    { 16, "852", 16 },
+                    { 17, "65", 17 },
+                    { 18, "61", 18 },
+                    { 19, "1", 19 },
+                    { 20, "81", 20 },
+                    { 21, "356", 21 },
+                    { 22, "372", 22 },
+                    { 23, "32", 23 },
+                    { 24, "33", 24 },
+                    { 25, "886", 25 },
+                    { 26, "34", 26 },
+                    { 27, "351", 27 },
+                    { 28, "386", 28 },
+                    { 29, "420", 29 },
+                    { 30, "82", 30 },
+                    { 31, "39", 31 },
+                    { 32, "972", 32 },
+                    { 33, "421", 33 },
+                    { 34, "370", 34 },
+                    { 35, "357", 35 },
+                    { 36, "371", 36 },
+                    { 37, "48", 37 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhoneCodes",
+                columns: new[] { "Id", "Code", "CountryId" },
+                values: new object[,]
+                {
+                    { 38, "56", 38 },
+                    { 39, "506", 39 },
+                    { 40, "598", 40 },
+                    { 41, "971", 41 },
+                    { 42, "60", 42 },
+                    { 43, "30", 43 },
+                    { 44, "974", 44 },
+                    { 45, "230", 45 },
+                    { 46, "385", 46 },
+                    { 47, "36", 47 },
+                    { 48, "40", 48 },
+                    { 49, "248", 49 },
+                    { 50, "359", 50 },
+                    { 51, "382", 51 },
+                    { 52, "507", 52 },
+                    { 53, "381", 53 },
+                    { 54, "995", 54 },
+                    { 55, "1-868", 55 },
+                    { 56, "51", 56 },
+                    { 57, "86", 57 },
+                    { 58, "973", 58 },
+                    { 59, "54", 59 },
+                    { 60, "968", 60 },
+                    { 61, "374", 61 },
+                    { 62, "965", 62 },
+                    { 63, "62", 63 },
+                    { 64, "1-876", 64 },
+                    { 65, "355", 65 },
+                    { 66, "66", 66 },
+                    { 67, "52", 67 },
+                    { 68, "7", 68 },
+                    { 69, "55", 69 },
+                    { 70, "387", 70 },
+                    { 71, "966", 71 },
+                    { 72, "57", 72 },
+                    { 73, "94", 73 },
+                    { 74, "267", 74 },
+                    { 75, "238", 75 },
+                    { 76, "1-809", 76 },
+                    { 77, "1-829", 76 },
+                    { 78, "1-849", 76 },
+                    { 79, "595", 77 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PhoneCodes",
+                columns: new[] { "Id", "Code", "CountryId" },
+                values: new object[,]
+                {
+                    { 80, "593", 78 },
+                    { 81, "373", 79 },
+                    { 82, "597", 80 },
+                    { 83, "27", 81 },
+                    { 84, "63", 82 },
+                    { 85, "84", 83 },
+                    { 86, "962", 84 },
+                    { 87, "264", 85 },
+                    { 88, "592", 86 },
+                    { 89, "90", 87 },
+                    { 90, "994", 88 },
+                    { 91, "501", 89 },
+                    { 92, "217", 90 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -774,6 +1025,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PhoneCodes_CountryId",
+                table: "PhoneCodes",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
                 table: "RefreshTokens",
                 column: "UserId");
@@ -867,6 +1123,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Memberships");
+
+            migrationBuilder.DropTable(
+                name: "PhoneCodes");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");

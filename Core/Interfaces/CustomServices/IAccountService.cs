@@ -8,6 +8,7 @@ namespace Core.Interfaces.CustomInterfaces
     public interface IAccountService
     {
         Task RegisterAsync(RegisterUserDTO data, string callbackUrl);
+        Task<UserDTO> GetUserProfile(string userName);
         Task<AuthenticationDTO> LoginAsync(string email, string password);
         Task<AuthenticationDTO> GenerateTokens(User user);
         Task LogoutAsync(UserLogoutDTO userTokensDTO);

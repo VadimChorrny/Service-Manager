@@ -5,8 +5,8 @@ namespace Core.Entities.Enums
     public enum PayExperience
     {
         [Description("Months")]
-        MONTH,
+        Month,
         [Description("Years")]
-        YEAR,
+        Year,
     }
 }

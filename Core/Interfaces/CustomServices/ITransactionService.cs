@@ -9,6 +9,7 @@ namespace Core.Interfaces.CustomServices
 {
     public interface ITransactionService
     {
+        Task<List<TransactionsSuccessResponseDTO>> RegisterTransactionsPrivat(string userId, DateTime from, DateTime to);
         Task<IEnumerable<TransactionDTO>> GetAllTransactionsBySubscription(Guid id);
         Task<TransactionDTO> GetTransactionById(string transactionId);
         Task<bool> AddTransactionsFromExcel(string path);
