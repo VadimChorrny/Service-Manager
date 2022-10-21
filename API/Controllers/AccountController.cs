@@ -24,6 +24,12 @@ namespace API.Controllers
             _emailService = emailService;
         } // I love u
         [Authorize]
+        [HttpPost("edit-profile")]
+        public IActionResult EditProfile()
+        {
+            return Ok();
+        }
+        [Authorize]
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {

@@ -270,6 +270,11 @@ namespace Infrastructure.Data
                 new Currency { Id = 28, CurrencyCode = "975", Name = "Bulgarian Lev", ShortName = "BGN", LettersSign = "lv." }
                 );
             #endregion
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "2301D884-221A-4E7D-B509-0113DCC043E1",
+                UserId = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7"
+            });
             modelBuilder.Entity<UserBank>().HasOne<User>(ub => ub.User).WithMany(u => u.Banks)
                 .HasForeignKey(ub => ub.UserId);
             modelBuilder.Entity<UserBank>().HasOne<Bank>(ub => ub.Bank).WithMany(b => b.UserBanks).HasForeignKey(ub => ub.BankId);

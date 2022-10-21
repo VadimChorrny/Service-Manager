@@ -7,6 +7,7 @@ using Core.Entities.UserEntity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Configuration
 {
@@ -28,8 +29,16 @@ namespace Infrastructure.Configuration
                 SecurityStamp = new Guid().ToString("D"),
             };
             admin.PasswordHash = PassGenerate(admin);
-
+            //admin.
             builder.HasData(admin);
+        }
+        public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string email, string[] roles)
+        {
+            UserManager<User> _userManager = services.GetService<UserManager<User>>();
+            User user = await _userManager.FindByEmailAsync(email);
+            var result = await _userManager.AddToRolesAsync(user, roles);
+
+            return result;
         }
         public string PassGenerate(IdentityUser user)
         {

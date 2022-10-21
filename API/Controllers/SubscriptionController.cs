@@ -31,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpGet("calculate-subscriptions")]
-        public async Task<IActionResult> GetSubscriptions(string userId)
+        public async Task<IActionResult> CalculateSubscriptions(string userId)
         {
             return Ok(await _subscriptionService.CalculateSubscriptions(userId));
         }

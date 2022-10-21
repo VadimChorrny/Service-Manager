@@ -7,7 +7,7 @@ namespace Core.Entities.CountryEntity
         [Key]
         public Guid Id { get; set; }
         public Guid CountryId { get; set; }
-        public string? CountryName { get; set; }
+        public string CountryName { get; set; }
         public Guid? LangId { get; set; }
     }
 }
