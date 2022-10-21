@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("get-subscriptions-by-user-id")]
         public async Task<IActionResult> GetSubscriptionsByUserId(string userId)
         {
-            return Ok(await _subscriptionService.GetSubscriptionsByUser(userId));
+            return Ok(await _subscriptionService.GetSubscriptionsByUser(userId, false));
         }
     }
 }

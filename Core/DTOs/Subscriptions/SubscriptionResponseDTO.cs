@@ -13,7 +13,7 @@ namespace Core.DTOs.Subscriptions
         //public string ServiceName { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        public DateTime Date2 { get; set; }
+        //public DateTime Date2 { get; set; }
         public bool IsCustom { get; set; } = true;
 
         public BillingCycleDTO BillingCycle { get; set; }

@@ -476,11 +476,15 @@ namespace Core.Services
             return null;
         }
 
-        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptionsByUser(string userId)
+        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptionsByUser(string userId, bool isWithHistory)
         {
             var user = await _unitOfWork.UserRepository.GetById(userId);
             if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
             var subscriptions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).Select(el => el.Subscription);
+            foreach (var subscription in subscriptions)
+            {
+                
+            }
             return _mapper.Map<IEnumerable<SubscriptionResponseDTO>>(subscriptions);
         }
 
