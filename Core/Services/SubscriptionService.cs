@@ -331,7 +331,9 @@ namespace Core.Services
             // Can be error
             try
             {
-                var user = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(predicate: u => u.Id == userId, include: source => source.Include(u => u.Banks).ThenInclude(b => b.Cards).ThenInclude(c => c.Transactions).ThenInclude(t => t.Subscription), disableTracking: false);
+                var user = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(predicate: u => u.Id == userId, include: source =>
+                    source.Include(u => u.Banks).ThenInclude(b => b.Cards).ThenInclude(c => c.Transactions).ThenInclude(t => t.Currency)
+                        .Include(u => u.Banks).ThenInclude(b => b.Cards).ThenInclude(c => c.Transactions).ThenInclude(t => t.Subscription), disableTracking: false);
                 if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
                 var transactions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).OrderByDescending(el => el.CreatedDate).ToArray();//.Concat()//user.Banks.Join//user.Banks.Select(b => b.Cards.Select(c => c.Transactions));
                                                                                                                                                                //var subscriptions = 
@@ -456,6 +458,8 @@ namespace Core.Services
                         }
 
                         sortedTransactions[0].Subscription.Tariff = sortedTransactions[0].Sum;
+                        sortedTransactions[0].Subscription.Date = sortedTransactions[0].CreatedDate;
+                        sortedTransactions[0].Subscription.CurrencyId = sortedTransactions[0].CurrencyId;
                         //}
 
                     }
@@ -476,14 +480,17 @@ namespace Core.Services
             return null;
         }
 
-        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptionsByUser(string userId, bool isWithHistory)
+        public async Task<IEnumerable<SubscriptionResponseDTO>> GetSubscriptionsByUser(string userId)
         {
-            var user = await _unitOfWork.UserRepository.GetById(userId);
-            if (user == null) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
-            var subscriptions = user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).Select(el => el.Subscription);
+            List<SubscriptionResponseDTO> result = new();
+            var userExist = await _unitOfWork.UserRepository.ExistsAsync(u => u.Id == userId);
+            if (userExist) throw new HttpException("User doesn`t exists", System.Net.HttpStatusCode.BadRequest);
+            //, include: source => source.Include(u => u.Banks).ThenInclude(b => b.Cards).ThenInclude(c => c.Transactions).ThenInclude(t => t.Subscription)
+            var subscriptions = await _unitOfWork.SubscriptionRepository.GetAllAsync(predicate: s => s.UserId == userId, include: source => source.Include(s => s.Transactions));//user.Banks.SelectMany(el => el.Cards).SelectMany(el2 => el2.Transactions).Select(el => el.Subscription);
             foreach (var subscription in subscriptions)
             {
-                
+                var subscriptionResult = _mapper.Map<SubscriptionResponseDTO>(subscription);
+                //subscriptionResult.Date = ;
             }
             return _mapper.Map<IEnumerable<SubscriptionResponseDTO>>(subscriptions);
         }

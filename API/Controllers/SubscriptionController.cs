@@ -8,6 +8,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
    // [Authorize]
     public class SubscriptionController : ControllerBase
     {
@@ -22,6 +23,7 @@ namespace API.Controllers
         {
             return Ok(await _subscriptionService.GetMonobankAccounts(token));
         }
+        [Authorize(Roles = "Administrator")]
 
         [HttpPost("register-transaction-from-accounts-monobank")]
         public async Task<IActionResult> RegisterTransactionsFromAccountsMonobank(IEnumerable<AccountMonobankDTO> monobankAccounts, string token, string userId, DateTime? from)
@@ -29,17 +31,17 @@ namespace API.Controllers
             await _subscriptionService.RegisterSubscriptionsFromAccountsMonobank(monobankAccounts, token, from, userId);
             return Ok();
         }
-
+        [Authorize(Roles = "Administrator")]
         [HttpGet("calculate-subscriptions")]
         public async Task<IActionResult> CalculateSubscriptions(string userId)
         {
             return Ok(await _subscriptionService.CalculateSubscriptions(userId));
         }
-
+        [Authorize(Roles="Administrator")]
         [HttpGet("get-subscriptions-by-user-id")]
         public async Task<IActionResult> GetSubscriptionsByUserId(string userId)
         {
-            return Ok(await _subscriptionService.GetSubscriptionsByUser(userId, false));
+            return Ok(await _subscriptionService.GetSubscriptionsByUser(userId));
         }
     }
 }

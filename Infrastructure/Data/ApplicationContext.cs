@@ -27,7 +27,7 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Currency>().HasIndex(u => u.CurrencyCode).IsUnique();
-
+            modelBuilder.Entity<Subscription>().HasOne(s => s.Currency).WithMany(c => c.Subscriptions).HasForeignKey(s => s.CurrencyId).OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Language>().HasData(
                 new Language{ Id = Guid.Parse("6d13646d-700f-444c-8fbf-aa540f08700d"), Name = "English", SmallName = "EN" },
                 new Language{ Id = Guid.Parse("0ea31b65-13ab-474d-bd52-3c79e8fea7ce"), Name = "Ukrainian", SmallName = "UA" }

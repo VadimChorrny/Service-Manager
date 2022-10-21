@@ -16,11 +16,13 @@ namespace Core.Services
     {
         private readonly IOptions<JwtOptions> _jwtOptions;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public JwtService(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager)
+        public JwtService(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            this._jwtOptions = jwtOptions;
-            this._userManager = userManager;
+            _jwtOptions = jwtOptions;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         //public string CreateRefreshToken()
@@ -74,7 +76,22 @@ namespace Core.Services
                 new Claim("Id", user.Id),
                 new Claim("Email", user.Email),
                 new Claim("Name", user.UserName),
+
             };
+            var userRoles = _userManager.GetRolesAsync(user).Result;
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole));
+                var role = _roleManager.FindByNameAsync(userRole).Result;
+                if (role != null)
+                {
+                    var roleClaims = _roleManager.GetClaimsAsync(role).Result;
+                    foreach (Claim roleClaim in roleClaims)
+                    {
+                        claims.Add(roleClaim);
+                    }
+                }
+            }
             //user.Roles
             //var roles = userManager.GetRolesAsync(user).Result;
             //foreach (var role in roles)

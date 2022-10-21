@@ -1774,6 +1774,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("BillingCycleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsCustom")
                         .HasColumnType("bit");
 
@@ -1804,6 +1810,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BillingCycleId");
+
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("RemindMeId");
 
@@ -2000,21 +2008,21 @@ namespace Infrastructure.Migrations
                         {
                             Id = "B22698B8-42A2-4115-9631-1C2D1E2AC5F7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a1be4a14-98e1-4d94-af73-9b894a1f51ad",
+                            ConcurrencyStamp = "86894b93-b00d-4ef7-9867-c757084cd56c",
                             Email = "Admin@Admin.com",
                             EmailConfirmed = true,
                             Gender = 0,
-                            LastActivityDay = new DateTime(2022, 10, 19, 19, 30, 2, 206, DateTimeKind.Local).AddTicks(5131),
+                            LastActivityDay = new DateTime(2022, 10, 21, 14, 49, 15, 61, DateTimeKind.Local).AddTicks(2083),
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "MASTERADMIN",
                             Notification = true,
-                            PasswordHash = "AQAAAAEAACcQAAAAEGdp9rOgQ7tHRvv8dhQuQIAUbvEEuOq2z84Q6GwXoRAA44qAmD4NEdwu+9xeMsJCcQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDhrBsvVTh4Tl+UiJGBpnub/q57qyr0spvyWlCtXdOgVT7F8yK0qFwOJQZBZGrkN1Q==",
                             PayExperience = 0,
                             PhoneNumber = "XXXXXXXXXXXXX",
                             PhoneNumberConfirmed = true,
                             PremiumMembership = 0,
-                            RegistrationDay = new DateTime(2022, 10, 19, 19, 30, 2, 206, DateTimeKind.Local).AddTicks(5094),
+                            RegistrationDay = new DateTime(2022, 10, 21, 14, 49, 15, 61, DateTimeKind.Local).AddTicks(2053),
                             RoundNumbersToIntegers = false,
                             SecurityStamp = "00000000-0000-0000-0000-000000000000",
                             TwoFactorEnabled = false,
@@ -2079,14 +2087,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = "2301D884-221A-4E7D-B509-0113DCC043E1",
-                            ConcurrencyStamp = "be84763b-1a2c-4f31-9990-ae8c72f01104",
+                            ConcurrencyStamp = "9e5e69ae-7b33-4f1c-9063-d70f9d9688e7",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = "7D9B7113-A8F8-4035-99A7-A20DD400F6A3",
-                            ConcurrencyStamp = "0533ec6b-6ca5-475d-a390-b485f39669ff",
+                            ConcurrencyStamp = "1e12d04f-fd57-4de3-89a0-6a24cfdfa6cd",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -2282,6 +2290,11 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.CurrencyEntity.Currency", "Currency")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Core.Entities.OtherEntities.RemindMe", "RemindMe")
                         .WithMany()
                         .HasForeignKey("RemindMeId");
@@ -2295,6 +2308,8 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("BillingCycle");
+
+                    b.Navigation("Currency");
 
                     b.Navigation("RemindMe");
 
@@ -2446,6 +2461,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.CountryEntity.Country", b =>
                 {
                     b.Navigation("PhoneCodes");
+                });
+
+            modelBuilder.Entity("Core.Entities.CurrencyEntity.Currency", b =>
+                {
+                    b.Navigation("Subscriptions");
                 });
 
             modelBuilder.Entity("Core.Entities.SubscriptionEntity.Subscription", b =>

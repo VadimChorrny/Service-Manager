@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class CountryCodes : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    LangId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -498,11 +498,14 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Tariff = table.Column<float>(type: "real", nullable: true),
                     BillingCycleId = table.Column<int>(type: "int", nullable: false),
                     RemindMeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LabelId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsCustom = table.Column<bool>(type: "bit", nullable: false)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsCustom = table.Column<bool>(type: "bit", nullable: false),
+                    CurrencyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -518,6 +521,17 @@ namespace Infrastructure.Migrations
                         principalTable: "BillingCycles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_RemindMes_RemindMeId",
+                        column: x => x.RemindMeId,
+                        principalTable: "RemindMes",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Subscriptions_Services_ServiceId",
                         column: x => x.ServiceId,
@@ -550,6 +564,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MerchantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MerchantPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserBankId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -623,14 +639,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "6c1d1c47-e74b-4efa-8744-00987f400048", "Administrator", "ADMINISTRATOR" },
-                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "103eea27-1705-409a-ac7a-4250b457fad5", "User", "USER" }
+                    { "2301D884-221A-4E7D-B509-0113DCC043E1", "9e5e69ae-7b33-4f1c-9063-d70f9d9688e7", "Administrator", "ADMINISTRATOR" },
+                    { "7D9B7113-A8F8-4035-99A7-A20DD400F6A3", "1e12d04f-fd57-4de3-89a0-6a24cfdfa6cd", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Age", "ConcurrencyStamp", "ConfirmationEmailToken", "ConfirmationEmailTokenExpirationDate", "CountryId", "CurrencyId", "Email", "EmailConfirmed", "Gender", "LangId", "LastActivityDay", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "Notification", "PasswordHash", "PayExperience", "PhoneNumber", "PhoneNumberConfirmed", "PremiumMembership", "RegistrationDay", "RoundNumbersToIntegers", "SecurityStamp", "StatusId", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "feb44219-a0bd-458f-9752-ab0fd9c372e7", null, null, null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 10, 11, 18, 23, 36, 499, DateTimeKind.Local).AddTicks(9626), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEHf9+13yBNK9GlOoHBxHiDi1uq5SY94u0CWURINqCbzRPYlbUHuD54xLOCCohwQYww==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 10, 11, 18, 23, 36, 499, DateTimeKind.Local).AddTicks(9595), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
+                values: new object[] { "B22698B8-42A2-4115-9631-1C2D1E2AC5F7", 0, null, "86894b93-b00d-4ef7-9867-c757084cd56c", null, null, null, null, "Admin@Admin.com", true, 0, null, new DateTime(2022, 10, 21, 14, 49, 15, 61, DateTimeKind.Local).AddTicks(2083), false, null, null, "ADMIN@ADMIN.COM", "MASTERADMIN", true, "AQAAAAEAACcQAAAAEDhrBsvVTh4Tl+UiJGBpnub/q57qyr0spvyWlCtXdOgVT7F8yK0qFwOJQZBZGrkN1Q==", 0, "XXXXXXXXXXXXX", true, 0, new DateTime(2022, 10, 21, 14, 49, 15, 61, DateTimeKind.Local).AddTicks(2053), false, "00000000-0000-0000-0000-000000000000", null, null, false, "masteradmin" });
 
             migrationBuilder.InsertData(
                 table: "BillingCycles",
@@ -806,6 +822,11 @@ namespace Infrastructure.Migrations
                 values: new object[] { new Guid("6d13646d-700f-444c-8fbf-aa540f08700d"), "English", "EN" });
 
             migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "2301D884-221A-4E7D-B509-0113DCC043E1", "B22698B8-42A2-4115-9631-1C2D1E2AC5F7" });
+
+            migrationBuilder.InsertData(
                 table: "Banks",
                 columns: new[] { "Id", "CountryId", "InstructionDescription", "InstructionTitle", "Links", "LinksApi", "Logo", "Name" },
                 values: new object[,]
@@ -857,8 +878,7 @@ namespace Infrastructure.Migrations
                     { 33, "421", 33 },
                     { 34, "370", 34 },
                     { 35, "357", 35 },
-                    { 36, "371", 36 },
-                    { 37, "48", 37 }
+                    { 36, "371", 36 }
                 });
 
             migrationBuilder.InsertData(
@@ -866,6 +886,7 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "CountryId" },
                 values: new object[,]
                 {
+                    { 37, "48", 37 },
                     { 38, "56", 38 },
                     { 39, "506", 39 },
                     { 40, "598", 40 },
@@ -906,8 +927,7 @@ namespace Infrastructure.Migrations
                     { 75, "238", 75 },
                     { 76, "1-809", 76 },
                     { 77, "1-829", 76 },
-                    { 78, "1-849", 76 },
-                    { 79, "595", 77 }
+                    { 78, "1-849", 76 }
                 });
 
             migrationBuilder.InsertData(
@@ -915,6 +935,7 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "CountryId" },
                 values: new object[,]
                 {
+                    { 79, "595", 77 },
                     { 80, "593", 78 },
                     { 81, "373", 79 },
                     { 82, "597", 80 },
@@ -1055,6 +1076,16 @@ namespace Infrastructure.Migrations
                 column: "BillingCycleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_CurrencyId",
+                table: "Subscriptions",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_RemindMeId",
+                table: "Subscriptions",
+                column: "RemindMeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_ServiceId",
                 table: "Subscriptions",
                 column: "ServiceId");
@@ -1131,9 +1162,6 @@ namespace Infrastructure.Migrations
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
-                name: "RemindMes");
-
-            migrationBuilder.DropTable(
                 name: "SearchPhone");
 
             migrationBuilder.DropTable(
@@ -1159,6 +1187,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "BillingCycles");
+
+            migrationBuilder.DropTable(
+                name: "RemindMes");
 
             migrationBuilder.DropTable(
                 name: "Services");
