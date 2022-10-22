@@ -12,7 +12,7 @@ namespace Infrastructure
     {
         public static void AddDbContext(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
         }
         public static void AddIdentity(this IServiceCollection services)
         {

@@ -90,6 +90,10 @@ namespace Core.Services
                             //JsonConvert.
                             //return JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(), new { accounts = new List<AccountMonobankDTO>() }).accounts;
                         }
+                        //if (responseText.Contains())
+                        //{
+
+                        //}
 
                         GlobalResponse responseModel; //= new Response(){ Merchant = "22"};
                         XmlDocument doc = new XmlDocument();

@@ -58,7 +58,7 @@ namespace Core.Services
             }
 
             unixTime = fromDate.Value.ToUnixTime();
-            UserBank userBank = (await _unitOfWork.UserBankRepository.GetFirstOrDefaultAsync((el => el.UserId == user.Id && el.BankId == 1)));
+            UserBank userBank = (await _unitOfWork.UserBankRepository.GetFirstOrDefaultAsync(predicate: (el => el.UserId == user.Id && el.BankId == 1), include: source => source.Include(ub => ub.User).Include(ub => ub.Bank).Include(ub => ub.Cards).ThenInclude(c => c.Transactions).ThenInclude(t => t.Currency), disableTracking: false));
             if (userBank == null)
             {
                 userBank = new UserBank { BankId = 1, User = user, BankToken = token };
@@ -72,7 +72,7 @@ namespace Core.Services
 
             foreach (var account in accountsMonobank)
             {
-                Card card = userBank.Cards.FirstOrDefault(el => el.CardNumber == account.CardNumber.FirstOrDefault());
+                Card card = userBank.Cards.FirstOrDefault(el => el.CardNumber == account.CardNumber.FirstOrDefault() );
                 if (card == null)
                 {
                     card = new Card { CardNumber = account.CardNumber.FirstOrDefault() };
@@ -98,7 +98,7 @@ namespace Core.Services
 
                             var transaction = new Transaction
                             {
-                                Currency = currency,
+                                CurrencyId = currency.Id,
                                 CreatedDate = TimeHelper.UnixTimeStampToDateTime(transactionDtoItem.Time),
                                 Description = transactionDtoItem.Description,
                                 Sum = transactionDtoItem.Amount,
@@ -112,6 +112,7 @@ namespace Core.Services
                             await _unitOfWork.SaveChangesAsync();
 
                         }
+                        await _unitOfWork.SaveChangesAsync();
                         //user.Transactions.Append();
                     }
                     else

@@ -18,6 +18,7 @@ using Core.Interfaces.CustomInterfaces;
 using Core.Interfaces.CustomServices;
 using Core.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace Core
 {
@@ -36,6 +37,7 @@ namespace Core
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITemplateHelper, TemplateHelper>();
+            
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

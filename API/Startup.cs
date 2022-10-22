@@ -11,6 +11,8 @@ using Core.Helpers;
 using API.Middlewares;
 using Core.Interfaces.CustomInterfaces;
 using Core.Services;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Localization;
 
 namespace API
 {
@@ -26,10 +28,28 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            
 
+            
+            //     services
+            //.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    var cultures = new[]
+            //                        {
+            //                                new CultureInfo("en"),
+            //                                new CultureInfo("ua")
+            //                           };
+            //    options.DefaultRequestCulture = new RequestCulture("ua");
+            //    options.SupportedCultures = cultures;
+            //    options.ApplyCurrentCultureToResponseHeaders = true;
+            //    options.
+            //    options.SupportedUICultures = cultures;
+            //});
+            // services.AddScoped<IStringLocalizer, StringLocalizer<SharedResource>>();
             services.AddControllers();
-
             services.AddCors();
+           
 
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
@@ -119,15 +139,22 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var supportedCultures = new[] { "en-US", "uk" };
+            var localizationOptions =
+                new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+            app.UseRequestLocalization(localizationOptions);
+            //app.ApplicationServices.GetService<IOptions<RequestLocalizationtions>>().Value
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
-
+           
             app.UseRouting();
 
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
